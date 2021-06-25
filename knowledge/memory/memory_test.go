@@ -99,13 +99,13 @@ func bool_uint16_uint8_layout() string {
 }
 
 func bool_uint32_uint16_layout() string {
-	type MyStruct struct {
+	// 匿名结构体
+	var ms struct {
 		Field1 bool
 		Field2 uint32
 		Field3 uint16
 	}
 
-	var ms = MyStruct{}
 	return fmt.Sprintf("totalSize: %d, %T : %d, %T %d, %T %d", unsafe.Sizeof(ms),
 		ms.Field1, unsafe.Sizeof(ms.Field1),
 		ms.Field2, unsafe.Sizeof(ms.Field2),
