@@ -1,12 +1,21 @@
 package memory_test
 
 import (
+	"fmt"
 	"testing"
 	"unsafe"
 )
 
 func TestEmptySlices(t *testing.T) {
 
+	// nil 切片
+	var s []int
+	if s == nil {
+		fmt.Printf("s 是 nil切片.\n")
+	}
+
+	// ---------------------------
+	// 空切片
 	p1 := make([]int, 0)
 	p2 := make([]int, 0)
 
@@ -21,6 +30,7 @@ func TestEmptySlices(t *testing.T) {
 	t.Logf("p1 len: %d cap: %d, p2 len: %d cap: %d", len(p1), cap(p1), len(p2), cap(p2))
 
 	// ----------------------------
+	// 指向非空数组的空切片
 	arr := [...]int{1, 2, 3}
 
 	s1 := arr[0:0:0]
@@ -38,3 +48,11 @@ func TestEmptySlices(t *testing.T) {
 	t.Logf("s1 len: %d cap: %d, s2 len: %d cap: %d", len(s1), cap(s1), len(s2), cap(s2))
 
 }
+
+/**
+声明但未初始化的切片 为 nil切片
+
+初始化一个空切片，内部指向一个空数组
+*/
+
+// 切片 -> 栈
