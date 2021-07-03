@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func TestChan(t *testing.T) {
+func InitChan(t *testing.T) {
 	{
 		var ch1 chan int             // 声明管道，值为nil
 		ch2 := make(chan int)        // 无缓冲管道
@@ -23,7 +23,7 @@ func TestChan(t *testing.T) {
 	{
 		ch := make(chan int, 10)
 		ch <- 1   // 数据流入管道
-		d := <-ch // 数据流程管道
+		d := <-ch // 数据流出管道
 		t.Log(d)
 	}
 
@@ -54,4 +54,8 @@ func chanParamWriteonly(ch chan<- int) {
 	// 只写的管道
 	ch <- 8
 	fmt.Println(ch)
+}
+
+func TestChan(t *testing.T) {
+
 }
