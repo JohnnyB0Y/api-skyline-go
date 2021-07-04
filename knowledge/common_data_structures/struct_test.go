@@ -22,10 +22,12 @@ func (a *Animal) SetName(name string) {
 
 type Cat struct {
 	Animal
+	Age uint8
 }
 
 type Dog struct {
-	a Animal
+	a   Animal
+	Age uint8
 }
 
 func InitStruct() {
@@ -57,6 +59,19 @@ func InitStruct() {
 
 	// dog.Name undefined (type Dog has no field or method Name)compiler
 	// dog.Name = "不可访问"
+
+	// 一些初始化方法
+	cat2 := Cat{
+		Animal{
+			"小🐈",
+		},
+		13,
+	}
+
+	dog2 := Dog{Age: 12, a: Animal{
+		"小dog",
+	}}
+	fmt.Println(cat2, dog2)
 }
 
 type CustomType struct {
