@@ -31,6 +31,17 @@ func InitMap() {
 	for k, v := range m2 {
 		fmt.Println(k, ":", v)
 	}
+
+	// 增删改查
+	m2["d"] = 4         // 新增
+	m2["d"] = 5         // 修改
+	delete(m2, "d")     // 删除
+	v, exist := m2["d"] // 查询
+	if exist {
+		fmt.Println("d is exist, ", v)
+	} else {
+		fmt.Println("d is not exist")
+	}
 }
 
 func TestMap(t *testing.T) {
