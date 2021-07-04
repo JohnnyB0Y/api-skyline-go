@@ -9,6 +9,7 @@ package commondatastructures_test
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -50,4 +51,80 @@ func TestString(t *testing.T) {
 	if err == nil {
 		fmt.Println(num)
 	}
+
+	// 6.0 字符串常用方法
+	usedString()
+}
+
+func usedString() {
+	// 统计字符数
+	s1 := "Hello, 中国"
+	r := []rune(s1)
+	fmt.Println(r, len(r))
+	for i := 0; i < len(r); i++ {
+		fmt.Printf("%v ", r[i])
+	}
+
+	// 字符串转字节 []byte
+	var s2 = []byte("Hello China!")
+	fmt.Println(s2)
+
+	// 字节转字符串
+	s3 := string([]byte{97, 98, 99})
+	fmt.Println(s3)
+
+	// 10进制 转 2，8，16进制，返回对应的字符串
+	str7 := strconv.FormatInt(123, 8)
+	fmt.Println(str7)
+
+	// 查找子串是否存在指定的字符串中
+	contains := strings.Contains("Welcome!", "come")
+	fmt.Println(contains)
+
+	// 统计一个字符串有几个指定的字串
+	count := strings.Count("Cheese", "e")
+	fmt.Println(count)
+
+	// 不区分大小写的字符串比较（==区分字母大小写）
+	fold := strings.EqualFold("abc", "AbC")
+	fmt.Println(fold)
+
+	// 返回字串在字符串中第一次出现的索引
+	index := strings.Index("China is a ...", "a")
+	fmt.Println(index)
+
+	// 返回字串在字符串最后一次出现的index，没有则返回-1
+	lastIndex := strings.LastIndex("The google make go!", "go")
+	fmt.Println(lastIndex)
+
+	// 将指定的子串替换成另外一个字串
+	replace := strings.Replace("I lean Chinese!", "lean", "study", 1)
+	fmt.Println(replace)
+
+	// 按照指定的某个字符，为分割标识，将一个字符串拆分为字符串数组
+	split := strings.Split("I, am, the, only, one.", ",")
+	fmt.Println(split)
+
+	// 将字符串的字母大小写替换
+	lower := strings.ToLower("Go to School.")
+	upper := strings.ToUpper("Go to School.")
+	fmt.Println(lower, upper)
+
+	// 将字符串左右的空格去掉
+	space := strings.TrimSpace(" Is me     ")
+	fmt.Println(space)
+
+	// 将字符串左右指定的字符去掉
+	trim := strings.Trim("!Go!!", "!")
+	fmt.Println(trim)
+
+	// 将字符串左边/右边指定的字符去掉
+	left := strings.TrimLeft("!bbq!", "!")
+	right := strings.TrimRight("!bbq!", "!")
+	fmt.Println(left, right)
+
+	// 判断字符串以什么开头/结尾
+	prefix := strings.HasPrefix("abcde", "ab")
+	suffix := strings.HasSuffix("abcde", "de")
+	fmt.Println(prefix, suffix)
 }
