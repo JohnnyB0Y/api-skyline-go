@@ -27,6 +27,47 @@ func slicePrint() {
 	sliceRise(s1)
 	sliceRise(s2)
 	fmt.Println(s1, s2)
+
+	s3 := []int{1, 2}
+	var s4 []int
+	i := copy(s4, s3)
+	// 0 [1 2] [] 0
+	fmt.Println(i, s3, s4, cap(s4))
+
+	s5 := make([]int, 0, 5)
+	i = copy(s5, s3)
+	// 0 [1 2] [] 5
+	fmt.Println(i, s3, s5, cap(s5))
+
+	s6 := []int{0, 0, 0, 0, 0}
+	i = copy(s6, s3)
+	// 2 [1 2] [1 2 0 0 0] 5
+	fmt.Println(i, s3, s6, cap(s6))
+
+	// Go 的 copy函数，按 min(len(dst), len(src)) 来判断需要拷贝的元素个数。
+	// 如果某个切片的个数为0️⃣，尽管容量不为0️⃣，也不会产生拷贝效果。
+	// 不太懂为什么这样设计？
+
+	// 切片表达式 slice[ low : high : max ]
+	s10 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s11 := s10[0:len(s10)]
+	s12 := s10[:]
+	// s11与s12效果一致；
+	fmt.Println(s11, s12)
+
+	s13 := s10[1:5:5]
+	// [2 3 4 5] 4 4
+	fmt.Println(s13, len(s13), cap(s13))
+	s13 = s10[0:5:5]
+	// [1 2 3 4 5] 5 5
+	fmt.Println(s13, len(s13), cap(s13))
+
+	s13 = s10[4:5:5]
+	// [5] 1 1
+	fmt.Println(s13, len(s13), cap(s13))
+
+	// 0 <= low <= high <= max <= cap(slice)
+	// 新切片的容量 = max - low ！！！
 }
 
 func sliceExtend() {
