@@ -128,3 +128,12 @@ func usedString() {
 	suffix := strings.HasSuffix("abcde", "de")
 	fmt.Println(prefix, suffix)
 }
+
+/**
+string 是 8bit 字节的集合，通常是 UTF-8编码的文本；（对 emoji 需要特殊处理）
+string 可以为空（长度为0）；
+string 对象不可以修改，只能重新分配内存创建新的字符串；
+string 的类型转换用 strconv 库；
+string 的字符串处理用 strings 库；
+string 可以和 字符数据结构rune 自由转换；
+*/
