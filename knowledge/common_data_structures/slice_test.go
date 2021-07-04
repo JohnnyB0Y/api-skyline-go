@@ -103,8 +103,18 @@ func sliceExtend() {
 }
 
 func sliceFunny() {
+	// 其他创建切片的方法
 	s := *new([]int)
 	fmt.Println(s, s == nil)
+
+	// 切片的头、尾删除操作
+	s1 := []int{1, 2, 3, 4}
+
+	sHead := s1[1:]
+	sTail := s1[:len(s1)-1]
+	// 切片的头、尾删除操作： [1 2 3 4] [2 3 4] [1 2 3]
+	fmt.Println("切片的头、尾删除操作：", s1, sHead, sTail)
+
 }
 
 func TestSlice(t *testing.T) {
