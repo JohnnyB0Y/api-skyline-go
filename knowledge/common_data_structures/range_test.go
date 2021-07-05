@@ -20,7 +20,7 @@ func TestRange(t *testing.T) {
 		fmt.Println(i, v)
 	}
 
-	// 作用于数组指针，遍历数组
+	// 作用于数组指针，遍历数组（这里大概是解引用的原因）
 	ap := &a
 	for i, v := range ap {
 		fmt.Println(i, v)
