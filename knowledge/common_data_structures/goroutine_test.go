@@ -15,6 +15,11 @@ package commondatastructures_test
 
 goroutine 解释：
 routine: 使计算机执行某一特定任务的指令列表；
+简单概括一下就是，Go语言调度函数及其执行上下文的数据结构；
 
+栈大小对比：
+	- goroutine 的初始栈大小为 2k，根据用户使用内存情况自动增长或缩小；
+	- Linux上的线程栈大小为 4k~10M，用户可自行修改；
+	- iOS的线程栈是固定的，APP主线程 1M，用户创建的线程 512K，不同系统版本可能会有变化；
 
 */
