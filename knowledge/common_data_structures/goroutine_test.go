@@ -13,6 +13,8 @@ package commondatastructures_test
 线程大约是协程的 30倍
 资料来源：https://zhuanlan.zhihu.com/p/80037638
 
+goroutine 解释：
+routine: 使计算机执行某一特定任务的指令列表；
 
 
 */
