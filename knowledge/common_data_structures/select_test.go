@@ -88,9 +88,13 @@ func SelectExample4() {
 
 func TestSelect(t *testing.T) {
 	// SelectExample1()
-	SelectExample2()
+	// SelectExample2()
 	// SelectExample3()
 	// SelectExample4()
+
+	// 初始化管道，并设置值为nil。称为零值。
+	var c chan int
+	fmt.Printf("chan type: %T, value: %v; nil type: %T, value: %v; chan == nil? %v \n", c, c, nil, nil, c == nil)
 }
 
 /**
@@ -103,7 +107,7 @@ select 语句，相当于 管道操作选择器；
 当管道可操作时，会随机选择一个来执行；
 当管道不可操作时，看有没有default选项，有就执行，没有就阻塞；
 
-1）如果操作的管道为 nil，由于 nil管道不可读不可写，在运行时会被忽略掉；
+1）如果操作的管道为零值管道，由于零值管道不可读不可写，在运行时会被忽略掉；
 2）从管道读取数据；
 	- 当管道有数据可读时，当前case执行并返回；
 	- 当管道没有数据可读，且管道已关闭，当前case执行并返回；
