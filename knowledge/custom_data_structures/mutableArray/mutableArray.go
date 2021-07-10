@@ -183,10 +183,8 @@ func main() {
 	arrM.Print()
 
 	arrM.Enumerate(func(i, v int) (stop bool) {
-		if i < 5 { // 打印前五元素
-			fmt.Println(i, v)
-			return
-		}
-		return true
+		// 打印前五元素
+		fmt.Println(i, v)
+		return i >= 4
 	})
 }
