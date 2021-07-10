@@ -9,6 +9,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -31,6 +32,10 @@ func MakeMutableArray(capacity int) MutableArray {
 	return arrM
 }
 
+func StandardMutableArray() MutableArray {
+	return MakeMutableArray(24)
+}
+
 // 添加，数组不够自动扩容
 func (arrM *MutableArray) Add(value int) error {
 	return arrM.InsertAtIndex(value, arrM.end+1)
@@ -41,11 +46,11 @@ func (arrM *MutableArray) InsertAtIndex(value int, index int) error {
 	return arrM.InsertsFromIndex([]int{value}, index)
 }
 
-// 插入切片
+// 插入切片，自动扩容
 func (arrM *MutableArray) InsertsFromIndex(values []int, index int) error {
 	if index > arrM.length {
 		// 返回插入越界错误❌
-		return nil
+		return errors.New("数组下标越界")
 	}
 
 	size := len(values)
@@ -84,7 +89,7 @@ func (arrM *MutableArray) InsertsFromIndex(values []int, index int) error {
 
 // 删除一个元素
 func (arrM *MutableArray) RemoveAtIndex(index int) (int, error) {
-	if index < arrM.length {
+	if index >= arrM.start && index < arrM.length {
 		item := arrM.innerArr[index]
 		for i := index; i < arrM.length; i++ {
 			if index+1 < arrM.length {
@@ -98,8 +103,8 @@ func (arrM *MutableArray) RemoveAtIndex(index int) (int, error) {
 		arrM.length--
 		return item, nil
 	}
-	// 错误❌处理放后面
-	return 0, nil
+	// 错误❌
+	return 0, errors.New("数组下标越界")
 }
 
 // 尾元素
@@ -120,6 +125,14 @@ func (arrM *MutableArray) First() (int, error) {
 // 删除首元素
 func (arrM *MutableArray) RemoveFirst() (int, error) {
 	return arrM.RemoveAtIndex(arrM.start)
+}
+
+// 获取元素
+func (arrM *MutableArray) ValueAtIndex(index int) (int, error) {
+	if index >= arrM.start && index < arrM.length {
+		return arrM.innerArr[index], nil
+	}
+	return 0, errors.New("数组下标越界")
 }
 
 func (arrM *MutableArray) Print() {
