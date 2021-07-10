@@ -8,7 +8,9 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type MutableArray struct {
 	innerArr []int
@@ -30,58 +32,52 @@ func MakeMutableArray(capacity int) MutableArray {
 }
 
 // 添加，数组不够自动扩容
-func (arrM *MutableArray) Add(value int) {
-	index := arrM.end + 1
-	if index < arrM.capacity {
-		arrM.innerArr[index] = value
-	} else {
-		// 扩容两倍
-		arrM.capacity *= 2
-		newArr := heapArray(arrM.capacity)
-		for i := arrM.start; i < arrM.length; i++ {
-			newArr[i] = arrM.innerArr[i]
-		}
-		newArr[index] = value
-		arrM.innerArr = newArr
-	}
-
-	arrM.end++
-	arrM.length++
+func (arrM *MutableArray) Add(value int) error {
+	return arrM.InsertAtIndex(value, arrM.end+1)
 }
 
 // 插入一个元素
 func (arrM *MutableArray) InsertAtIndex(value int, index int) error {
+	return arrM.InsertsFromIndex([]int{value}, index)
+}
+
+// 插入切片
+func (arrM *MutableArray) InsertsFromIndex(values []int, index int) error {
 	if index > arrM.length {
 		// 返回插入越界错误❌
 		return nil
-	} else if index == arrM.length {
-		// 插入到最后
-		arrM.Add(value)
-		return nil
 	}
+
+	size := len(values)
 
 	// 插入
 	oldArr := arrM.innerArr
-	if arrM.length >= arrM.capacity {
+	if arrM.length+size-1 >= arrM.capacity {
 		// 扩容
-		arrM.capacity *= 2
+		if size > arrM.capacity {
+			arrM.capacity = size * 2
+		} else {
+			arrM.capacity = arrM.capacity * 2
+		}
 		arrM.innerArr = heapArray(arrM.capacity)
 		// 插入前半部分
 		for i := arrM.start; i < index; i++ {
-			fmt.Print(oldArr[i])
 			arrM.innerArr[i] = oldArr[i]
 		}
 	}
 
 	// 插入后半部分
-	for i := arrM.length; i > index; i-- {
-		arrM.innerArr[i] = oldArr[i-1]
+	for i := arrM.length + size - 1; i > index+size-1; i-- {
+		arrM.innerArr[i] = oldArr[i-size]
 	}
 
 	// 插入当前
-	arrM.innerArr[index] = value
-	arrM.end++
-	arrM.length++
+	for i := index; i < index+size; i++ {
+		arrM.innerArr[i] = values[i-index]
+	}
+
+	arrM.end += size
+	arrM.length += size
 
 	return nil
 }
@@ -128,10 +124,11 @@ func (arrM *MutableArray) RemoveFirst() (int, error) {
 
 func (arrM *MutableArray) Print() {
 	fmt.Printf("MutableArray: [start: %d end: %d] length: %d, capacity: %d\n", arrM.start, arrM.end, arrM.length, arrM.capacity)
+	fmt.Print("[")
 	for i := arrM.start; i < arrM.length; i++ {
-		fmt.Printf("%v : %v, ", i, arrM.innerArr[i])
+		fmt.Printf("%3v ", arrM.innerArr[i])
 	}
-	fmt.Println()
+	fmt.Print("]\n")
 }
 
 // 手动逃逸到堆上
@@ -145,9 +142,19 @@ func main() {
 	arrM.Add(4)
 	arrM.Add(6)
 	println(arrM.RemoveLast())
+	// [  3   4 ]
 	arrM.Print()
 	arrM.Add(9)
 	arrM.InsertAtIndex(10, 0)
 	arrM.InsertAtIndex(11, 0)
+	// [ 11  10   3   4   9 ]
 	arrM.Print()
+	arrM.InsertsFromIndex([]int{22, 23, 24}, 3)
+	// [ 11  10   3  22  23  24   4   9 ]
+	arrM.Print()
+
+	arrM.Add(25)
+	// [ 11  10   3  22  23  24   4   9  25 ]
+	arrM.Print()
+
 }
