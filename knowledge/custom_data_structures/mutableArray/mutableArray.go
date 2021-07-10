@@ -55,6 +55,7 @@ func (arrM *MutableArray) InsertAtIndex(value int, index int) error {
 		// 返回插入越界错误❌
 		return nil
 	} else if index == arrM.length {
+		// 插入到最后
 		arrM.Add(value)
 		return nil
 	}
@@ -64,9 +65,7 @@ func (arrM *MutableArray) InsertAtIndex(value int, index int) error {
 	if arrM.length >= arrM.capacity {
 		// 扩容
 		arrM.capacity *= 2
-		newArr := heapArray(arrM.capacity)
-		arrM.innerArr = newArr
-		fmt.Print("ssssssssssssssssssssss\n")
+		arrM.innerArr = heapArray(arrM.capacity)
 		// 插入前半部分
 		for i := arrM.start; i < index; i++ {
 			fmt.Print(oldArr[i])
@@ -89,7 +88,6 @@ func (arrM *MutableArray) InsertAtIndex(value int, index int) error {
 
 // 删除一个元素
 func (arrM *MutableArray) RemoveAtIndex(index int) (int, error) {
-	println("del", index)
 	if index < arrM.length {
 		item := arrM.innerArr[index]
 		for i := index; i < arrM.length; i++ {
@@ -131,14 +129,14 @@ func (arrM *MutableArray) RemoveFirst() (int, error) {
 func (arrM *MutableArray) Print() {
 	fmt.Printf("MutableArray: [start: %d end: %d] length: %d, capacity: %d\n", arrM.start, arrM.end, arrM.length, arrM.capacity)
 	for i := arrM.start; i < arrM.length; i++ {
-		fmt.Println(i, " : ", arrM.innerArr[i])
+		fmt.Printf("%v : %v, ", i, arrM.innerArr[i])
 	}
+	fmt.Println()
 }
 
 // 手动逃逸到堆上
 func heapArray(capacity int) []int {
-	s := make([]int, capacity)
-	return s
+	return make([]int, capacity)
 }
 
 func main() {
@@ -147,6 +145,7 @@ func main() {
 	arrM.Add(4)
 	arrM.Add(6)
 	println(arrM.RemoveLast())
+	arrM.Print()
 	arrM.Add(9)
 	arrM.InsertAtIndex(10, 0)
 	arrM.InsertAtIndex(11, 0)
