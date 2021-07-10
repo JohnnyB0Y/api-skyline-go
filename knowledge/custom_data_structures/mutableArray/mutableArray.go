@@ -21,6 +21,8 @@ type MutableArray struct {
 	end      int
 }
 
+type EnumerateArrayFunc func(i int, v int) (stop bool)
+
 func MakeMutableArray(capacity int) MutableArray {
 	arrM := MutableArray{}
 	arrM.innerArr = heapArray(capacity)
@@ -135,6 +137,16 @@ func (arrM *MutableArray) ValueAtIndex(index int) (int, error) {
 	return 0, errors.New("数组下标越界")
 }
 
+// 遍历
+func (arrM *MutableArray) Enumerate(fn EnumerateArrayFunc) {
+	for i := arrM.start; i < arrM.length; i++ {
+		result := fn(i, arrM.innerArr[i])
+		if result {
+			break
+		}
+	}
+}
+
 func (arrM *MutableArray) Print() {
 	fmt.Printf("MutableArray: [start: %d end: %d] length: %d, capacity: %d\n", arrM.start, arrM.end, arrM.length, arrM.capacity)
 	fmt.Print("[")
@@ -170,4 +182,11 @@ func main() {
 	// [ 11  10   3  22  23  24   4   9  25 ]
 	arrM.Print()
 
+	arrM.Enumerate(func(i, v int) (stop bool) {
+		if i < 5 { // 打印前五元素
+			fmt.Println(i, v)
+			return
+		}
+		return true
+	})
 }
