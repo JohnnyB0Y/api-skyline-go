@@ -6,7 +6,7 @@
 
 // 可变数组
 
-package main
+package mutableArray
 
 import (
 	"errors"
@@ -159,32 +159,4 @@ func (arrM *MutableArray) Print() {
 // 手动逃逸到堆上
 func heapArray(capacity int) []int {
 	return make([]int, capacity)
-}
-
-func main() {
-	arrM := MakeMutableArray(1)
-	arrM.Add(3)
-	arrM.Add(4)
-	arrM.Add(6)
-	println(arrM.RemoveLast())
-	// [  3   4 ]
-	arrM.Print()
-	arrM.Add(9)
-	arrM.InsertAtIndex(10, 0)
-	arrM.InsertAtIndex(11, 0)
-	// [ 11  10   3   4   9 ]
-	arrM.Print()
-	arrM.InsertsFromIndex([]int{22, 23, 24}, 3)
-	// [ 11  10   3  22  23  24   4   9 ]
-	arrM.Print()
-
-	arrM.Add(25)
-	// [ 11  10   3  22  23  24   4   9  25 ]
-	arrM.Print()
-
-	arrM.Enumerate(func(i, v int) (stop bool) {
-		// 打印前五元素
-		fmt.Println(i, v)
-		return i >= 4
-	})
 }
