@@ -40,3 +40,8 @@ func TestMutableArray(t *testing.T) {
 	})
 
 }
+
+/**
+使用测试命令
+go test mutableArray_test.go mutableArray.go -v -cover
+*/
