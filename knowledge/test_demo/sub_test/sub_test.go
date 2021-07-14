@@ -55,12 +55,20 @@ func parallelTest3(t *testing.T) {
 
 func TestSub(t *testing.T) {
 	// setup
-	t.Log("Setup...")
+	t.Log("Test Sub Setup...")
 
 	// 子测试名称  子测试函数
 	t.Run("A=1", subtest1)
 	t.Run("A=2", subtest2)
 	t.Run("B=1", subtest3)
+
+	// finished
+	t.Log("Test Sub Finished...")
+}
+
+func TestSubParallel(t *testing.T) {
+	// setup
+	t.Log("Test Parallel Setup...")
 
 	// 并发测试
 	t.Run("group", func(t *testing.T) {
@@ -70,7 +78,7 @@ func TestSub(t *testing.T) {
 	})
 
 	// finished
-	t.Log("Finished...")
+	t.Log("Test Parallel Finished...")
 }
 
 /**
