@@ -6,6 +6,8 @@
 
 // go test -run ExampleSendJSON
 
+// 示例测试
+// 既可以出现在文档里，也可以用来执行测试
 // Sample to show how to write a basic example.
 package handlers_test
 

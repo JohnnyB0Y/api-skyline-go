@@ -12,6 +12,8 @@
 
 - 示例测试：
   - 测试函数：func ExampleXXX() {}
+  - 既可以出现在文档里，也可以用来执行测试
+    - [打开本地文档：](https://learnku.com/articles/56426)~/go/bin/godoc -http=:6060 -play
 
 - 性能测试：
   - 测试函数：func BenchmarkXXX(b *testing.B) {}
