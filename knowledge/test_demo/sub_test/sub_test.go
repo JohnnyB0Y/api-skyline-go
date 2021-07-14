@@ -1,6 +1,8 @@
 package subtest
 
 import (
+	"fmt"
+	"os"
 	"testing"
 	"time"
 )
@@ -79,6 +81,18 @@ func TestSubParallel(t *testing.T) {
 
 	// finished
 	t.Log("Test Parallel Finished...")
+}
+
+func TestMain(m *testing.M) {
+	// 主动执行各种测试
+	fmt.Println("Test Main Setup...")
+
+	// 执行测试，包括 unit、benchmark、example 测试
+	code := m.Run()
+
+	fmt.Println("Test Main Finished...")
+
+	os.Exit(code)
 }
 
 /**
