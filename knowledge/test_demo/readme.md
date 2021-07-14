@@ -15,11 +15,17 @@
   - 既可以出现在文档里，也可以用来执行测试
     - [打开本地文档：](https://learnku.com/articles/56426)~/go/bin/godoc -http=:6060 -play
 
-- 性能测试：
+- 基准测试：
   - 测试函数：func BenchmarkXXX(b *testing.B) {}
+  - 测试参数
+    - go test -run none -bench . -benchtime 3s -benchmem
+      - -run none 让 go test 匹配不到所有测试文件（我们没有以 none 做测试函数名，所以才匹配不到）
+      - -bench . 表示对所有的 benchmark函数 做测评
+      - -benchtime 3s 设置测试时间 3秒（默认是1s）
+      - -benchmem 输出内存分配情况
 
 
-### 命令行
+### [命令行](https://hyper0x.github.io/go_command_tutorial/#/0.7)
 - 开始测试
   - go test
 
