@@ -37,6 +37,13 @@ func TestSub(t *testing.T) {
 	t.Run("A=1", subtest1)
 	t.Run("A=2", subtest2)
 	t.Run("B=1", subtest3)
+
+	// 并发测试
+	t.Run("group", func(t *testing.T) {
+		t.Run("test1", subtest1)
+		t.Run("test2", subtest2)
+		t.Run("test3", subtest3)
+	})
 }
 
 /**
