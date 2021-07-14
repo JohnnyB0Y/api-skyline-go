@@ -5,6 +5,10 @@
 
 - 单元测试：t *testing.T
   - 测试函数：func TestXXX(t *testing.T) {}
+    - t.Error 测试失败并记录信息
+    - t.Log 测试记录信息
+    - t.Fatal 测试失败，记录信息，并结束测试
+
 
 - 示例测试：
   - 测试函数：func ExampleXXX() {}
