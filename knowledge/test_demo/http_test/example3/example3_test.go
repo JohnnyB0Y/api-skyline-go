@@ -8,6 +8,7 @@ package example3_test
 
 // Sample test to show how to mock an HTTP GET call internally.
 // 仿制一个服务器，加速测试。
+// 可以模拟各种错误情况
 
 import (
 	"encoding/xml"
