@@ -1,6 +1,9 @@
 package subtest
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func subtest1(t *testing.T) {
 	var a = 1
@@ -32,7 +35,28 @@ func subtest3(t *testing.T) {
 	}
 }
 
+func parallelTest1(t *testing.T) {
+	t.Parallel()
+	time.Sleep(3 * time.Second)
+	// do something
+}
+
+func parallelTest2(t *testing.T) {
+	t.Parallel()
+	time.Sleep(2 * time.Second)
+	// do something
+}
+
+func parallelTest3(t *testing.T) {
+	t.Parallel()
+	time.Sleep(1 * time.Second)
+	// do something
+}
+
 func TestSub(t *testing.T) {
+	// setup
+	t.Log("Setup...")
+
 	// 子测试名称  子测试函数
 	t.Run("A=1", subtest1)
 	t.Run("A=2", subtest2)
@@ -40,10 +64,13 @@ func TestSub(t *testing.T) {
 
 	// 并发测试
 	t.Run("group", func(t *testing.T) {
-		t.Run("test1", subtest1)
-		t.Run("test2", subtest2)
-		t.Run("test3", subtest3)
+		t.Run("test1", parallelTest1)
+		t.Run("test2", parallelTest2)
+		t.Run("test3", parallelTest3)
 	})
+
+	// finished
+	t.Log("Finished...")
 }
 
 /**
