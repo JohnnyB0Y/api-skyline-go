@@ -23,6 +23,7 @@
       - -bench . 表示对所有的 benchmark函数 做测评
       - -benchtime 3s 设置测试时间 3秒（默认是1s）
       - -benchmem 输出内存分配情况
+      - -memprofile m.out 生成内存分析报告
   - 注意事项
     - 进行基准测试前，电脑性能需要保证最优；
     - 多个基准测试，可能会互相影响测试结果；（运行下一次测试时，可能同时也在清理上一次测试分配的内存或资源）
@@ -45,6 +46,15 @@
     - go test -coverprofile c.out
   - 在网页里查看覆盖度详情报告
     - go tool cover -html c.out
+
+内存分析报告
+  - 生成内存分析报告
+    - go test -run none -bench . -benchtime 3s -benchmem -memprofile m.out
+  - 查看分析报告
+    - go tool pprof -alloc_space m.out
+  - pprof 命令
+    - list algOne
+
 
 ### 流程
 1，当我们开始写代码的时候，可以在把源代码文件和测试文件放在同名的包里面，对未导出的API进行测试。
