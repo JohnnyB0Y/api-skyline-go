@@ -68,6 +68,19 @@ CPU分析报告
   - pprof 命令
     - list algOne 找出调用algOne函数的CPU处理信息
 
+负载追踪报告
+  - 让系统每秒生成一份调度器追踪信息
+    - > GODEBUG=schedtrace=1000 ./project > /dev/null
+      - > schedtrace=1000 设置1000毫秒（1秒）追踪一次；
+      - > \> /dev/null 默认错误信息是输出到错误端，这里是把错误信息从定向到 /dev/null 文件夹里；
+  - 让系统每秒生成一份垃圾收集追踪信息 (垃圾收集时间最好不要超过100微妙，两次垃圾收集大概在1到2毫秒)
+    - > GODEBUG=gctrace=1 ./project > /dev/null
+  - 运行负载请求
+    - > hey -m POST -c 100 -n 10000 "http://localhost:5000/search>term=trump&cnn=on&bbc=on&nyt=on"
+      - > -m POST 请求方法
+      - > -c 100 启动100条连接
+      - > -n 10000 发起请求 10000 次
+      - > "xxxx" 请求的 URL
 
 
 ### 流程
