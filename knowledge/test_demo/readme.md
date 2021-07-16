@@ -82,12 +82,12 @@ CPU分析报告
       - > -n 10000 发起请求 10000 次
       - > "xxxx" 请求的 URL
   - 火焰图追踪信息
-    - "runtime/trace" 导入trace包
-    - "os" 导入os包
-    - trace.Start(os.Stdout) 编写开启追踪代码，写入到标准输出端；
-    - defer trace.Stop() 执行完后，结束追踪；
-    - go build 先编译代码
-    - go tool trace t.out 追踪信息 并输出到 t.out 文件
+    - > "runtime/trace" 导入trace包
+    - > "os" 导入os包
+    - > trace.Start(os.Stdout) 编写开启追踪代码，写入到标准输出端；
+    - > defer trace.Stop() 执行完后，结束追踪；
+    - > go build 先编译代码
+    - > go tool trace t.out 追踪信息 并输出到 t.out 文件
 
 
 
