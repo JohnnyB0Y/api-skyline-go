@@ -50,10 +50,24 @@
 内存分析报告
   - 生成内存分析报告
     - go test -run none -bench . -benchtime 3s -benchmem -memprofile m.out
+      - -memprofile m.out 生成内存分析报告
+    - go test -gcflags "-m -m" -run none -bench . -benchtime 3s -benchmem -memprofile m.out
+      - -gcflags "-m -m" 让编译器在运行测试之前，生成一份逸出分析报告
   - 查看分析报告
     - go tool pprof -alloc_space m.out
   - pprof 命令
-    - list algOne
+    - list algOne 找出调用algOne函数的内存分配信息
+
+CPU分析报告
+  - 生成CPU分析报告
+    - go test -run none -bench . -benchtime 3s -benchmem -cpuprofile c.out
+  - 查看分析报告
+    - go tool pprof c.out
+  - 在网页中查看分析报告
+    - go tool pprof -http :3000 c.out
+  - pprof 命令
+    - list algOne 找出调用algOne函数的CPU处理信息
+
 
 
 ### 流程
