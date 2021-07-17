@@ -113,32 +113,3 @@ func (q *queue) nextHead() int {
 	}
 	return q.head + 1
 }
-
-// 优先队列
-type priorityQueue struct {
-	q queue
-}
-
-func NewPriorityQueue(arr []int) priorityQueue {
-	pq := priorityQueue{}
-	pq.q = NewQueue(arr)
-	return pq
-}
-
-// 优先队列进入
-func (pq *priorityQueue) PriorityEnqueue(item int) error {
-	err := pq.q.Enqueue(item)
-
-	if err == nil {
-		// 调整顺序
-		pq.q.Enumerate(func(idx, val int) (stop bool) {
-			if item > val {
-				// ??????????????????????????????????????
-			}
-
-			return
-		})
-	}
-
-	return err
-}

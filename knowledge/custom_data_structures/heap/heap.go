@@ -10,18 +10,18 @@ import (
 	"errors"
 )
 
-type heap struct {
+type Heap struct {
 	arr    []int
 	length int
 }
 
-func NewHeap(arr []int) heap {
-	var h heap = heap{}
+func NewHeap(arr []int) Heap {
+	var h Heap = Heap{}
 	h.Build(arr)
 	return h
 }
 
-func (h *heap) Pop() (int, error) {
+func (h *Heap) Pop() (int, error) {
 
 	if h.length <= 0 {
 		return 0, errors.New("no element baby")
@@ -35,7 +35,7 @@ func (h *heap) Pop() (int, error) {
 	return val, nil
 }
 
-func (h *heap) Push(val int) error {
+func (h *Heap) Push(val int) error {
 	if h.length >= len(h.arr) {
 		// 数组越界了
 		return errors.New("out of bounds baby")
@@ -62,7 +62,7 @@ func (h *heap) Push(val int) error {
 }
 
 // 枚举遍历堆
-func (h *heap) Enumerate(fn func(idx, val int) (stop bool)) {
+func (h *Heap) Enumerate(fn func(idx, val int) (stop bool)) {
 	for i := 0; i < h.length; i++ {
 		stop := fn(i, h.arr[i])
 		if stop {
@@ -71,7 +71,7 @@ func (h *heap) Enumerate(fn func(idx, val int) (stop bool)) {
 	}
 }
 
-func (h *heap) Build(arr []int) {
+func (h *Heap) Build(arr []int) {
 	h.arr = arr
 	h.length = len(arr)
 	// 最后一个父节点
@@ -80,7 +80,15 @@ func (h *heap) Build(arr []int) {
 	}
 }
 
-func (h *heap) heapify(parent int, recursive bool) {
+func (h *Heap) Empty() bool {
+	return h.length == 0
+}
+
+func (h *Heap) Full() bool {
+	return h.length == len(h.arr)
+}
+
+func (h *Heap) heapify(parent int, recursive bool) {
 
 	if parent < 0 {
 		return
@@ -109,7 +117,7 @@ func (h *heap) heapify(parent int, recursive bool) {
 	}
 }
 
-func (h *heap) swap(src, des int) {
+func (h *Heap) swap(src, des int) {
 	temp := h.arr[src]
 	h.arr[src] = h.arr[des]
 	h.arr[des] = temp

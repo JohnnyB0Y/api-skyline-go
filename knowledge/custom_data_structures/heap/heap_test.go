@@ -28,7 +28,7 @@ func TestHeap(t *testing.T) {
 	heapPopAll(&h)
 }
 
-func heapPopAll(h *heap) {
+func heapPopAll(h *Heap) {
 	for {
 		val, err := h.Pop()
 		if err != nil {
@@ -39,7 +39,7 @@ func heapPopAll(h *heap) {
 	fmt.Println()
 }
 
-func heapPrintAll(h *heap) {
+func heapPrintAll(h *Heap) {
 	h.Enumerate(func(idx, val int) (stop bool) {
 		if idx == 0 {
 			fmt.Print("[ ")
