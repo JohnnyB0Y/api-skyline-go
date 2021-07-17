@@ -40,7 +40,7 @@ func heapPopAll(h *heap) {
 }
 
 func heapPrintAll(h *heap) {
-	h.Enumeration(func(idx, val int) (stop bool) {
+	h.Enumerate(func(idx, val int) (stop bool) {
 		if idx == 0 {
 			fmt.Print("[ ")
 		}
