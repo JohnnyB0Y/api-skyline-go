@@ -41,7 +41,7 @@ func (q *queue) Enqueue(item int) error {
 	}
 
 	// 首次进入
-	if q.head == -1 {
+	if q.Empty() {
 		q.head = 0
 	}
 

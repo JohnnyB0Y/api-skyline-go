@@ -102,11 +102,12 @@ func (h *Heap) heapify(parent int, recursive bool) {
 	// 大的节点上浮
 	left := parent*2 + 1
 	right := parent*2 + 2
+
 	switch {
-	case h.arr[left] > h.arr[right] && h.arr[left] > h.arr[parent]: // 左 > 右，且 左 > 父
+	case h.canSwapLeft(left, right, parent): // 左 > 右，且 左 > 父
 		h.swap(left, parent)
 		left = parent
-	case h.arr[right] > h.arr[left] && h.arr[right] > h.arr[parent]: // 左 < 右，且 右 > 父
+	case h.canSwapRight(left, right, parent): // 左 < 右，且 右 > 父
 		h.swap(right, parent)
 		right = parent
 	}
@@ -115,6 +116,24 @@ func (h *Heap) heapify(parent int, recursive bool) {
 		h.heapify(left, recursive)
 		h.heapify(right, recursive)
 	}
+}
+
+func (h *Heap) canSwapLeft(left, right, parent int) bool {
+	if left >= h.length {
+		return false
+	}
+
+	if right >= h.length && h.arr[left] > h.arr[parent] {
+		return true
+	}
+	return h.arr[left] > h.arr[parent]
+}
+
+func (h *Heap) canSwapRight(left, right, parent int) bool {
+	if right >= h.length {
+		return false
+	}
+	return h.arr[right] > h.arr[left] && h.arr[right] > h.arr[parent]
 }
 
 func (h *Heap) swap(src, des int) {
