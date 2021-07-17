@@ -62,7 +62,7 @@ func (h *heap) Push(val int) error {
 }
 
 // 枚举遍历堆
-func (h *heap) Enumeration(fn func(idx, val int) (stop bool)) {
+func (h *heap) Enumerate(fn func(idx, val int) (stop bool)) {
 	for i := 0; i < h.length; i++ {
 		stop := fn(i, h.arr[i])
 		if stop {
