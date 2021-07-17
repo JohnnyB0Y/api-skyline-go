@@ -13,9 +13,22 @@ import (
 
 func TestHeap(t *testing.T) {
 	h := NewHeap([]int{2, 3, 5, 7, 15, 0, 17})
+	heapPrintAll(&h)
+	heapPopAll(&h)
 
-	fmt.Println(h.arr, h.length)
+	h.Build([]int{1, 2, 10, 3, 17})
+	heapPrintAll(&h)
+	h.Pop()
+	h.Pop()
+	heapPrintAll(&h)
 
+	h.Push(50)
+	h.Push(11)
+	heapPrintAll(&h)
+	heapPopAll(&h)
+}
+
+func heapPopAll(h *heap) {
 	for {
 		val, err := h.Pop()
 		if err != nil {
@@ -24,4 +37,17 @@ func TestHeap(t *testing.T) {
 		fmt.Printf("%d ", val)
 	}
 	fmt.Println()
+}
+
+func heapPrintAll(h *heap) {
+	h.Enumeration(func(idx, val int) (stop bool) {
+		if idx == 0 {
+			fmt.Print("[ ")
+		}
+		fmt.Printf("%d ", val)
+		if idx == h.length-1 {
+			fmt.Println("]", h.length)
+		}
+		return
+	})
 }
