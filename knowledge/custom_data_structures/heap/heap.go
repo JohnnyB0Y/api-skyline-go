@@ -6,6 +6,8 @@
 
 package heap
 
+import "errors"
+
 type heap struct {
 	arr    []int
 	length int
@@ -17,13 +19,18 @@ func NewHeap(arr []int) heap {
 	return h
 }
 
-func (h *heap) Pop() int {
+func (h *heap) Pop() (int, error) {
+
+	if h.length <= 0 {
+		return 0, errors.New("no element baby")
+	}
+
 	// 最后的叶子 和 0 号位交换
 	val := h.arr[0]
 	h.arr[0] = h.arr[h.length-1]
 	h.length -= 1
 	h.heapify(0)
-	return val
+	return val, nil
 }
 
 func (h *heap) Build(arr []int) {

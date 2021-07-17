@@ -16,9 +16,12 @@ func TestHeap(t *testing.T) {
 
 	fmt.Println(h.arr, h.length)
 
-	fmt.Print(h.Pop())
-	for 0 < h.length {
-		fmt.Printf(" > %d", h.Pop())
+	for {
+		val, err := h.Pop()
+		if err != nil {
+			break
+		}
+		fmt.Printf("%d ", val)
 	}
 	fmt.Println()
 }
