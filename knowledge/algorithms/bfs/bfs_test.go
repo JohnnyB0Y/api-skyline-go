@@ -21,7 +21,14 @@ func TestBFS(t *testing.T) {
 		"F": {"D"},
 	}
 
-	BFS(graph, "A")
+	pathMap := BFS(graph, "A")
+	// A ==> F 最短距离
+	des := "F"
+	for des != "" {
+		fmt.Println(des)
+		des = pathMap[des]
+	}
+
 	fmt.Println("---------------------------------------------------")
 	DFS(graph, "A")
 }

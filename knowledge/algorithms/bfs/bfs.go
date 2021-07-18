@@ -11,19 +11,23 @@ import (
 	"fmt"
 )
 
-func BFS(graph map[string][]string, startPoint string) {
+func BFS(graph map[string][]string, startPoint string) map[string]string {
 	// 访问队列
-	q := queue.NewQueue(make([]string, 0, len(graph)), 40)
+	q := queue.NewQueue(make([]string, 0, len(graph)), len(graph))
 	q.Enqueue(startPoint)
 
 	// 存放已访问的节点
 	seen := make(map[string]bool, len(graph))
 	seen[startPoint] = true
+	// 存放最短路径
+	pathMap := make(map[string]string, len(graph))
+	pathMap[startPoint] = ""
 
 	for !q.Empty() {
 		vertex, err := q.Dequeue()
 		if err != nil {
 			fmt.Println("err:", err)
+			break
 		}
 
 		// nodes := graph[vertex.(string)]
@@ -33,8 +37,9 @@ func BFS(graph map[string][]string, startPoint string) {
 			if see := seen[w]; !see {
 				q.Enqueue(w)
 				seen[w] = true
+				pathMap[w] = vertex
 			}
 		}
-		fmt.Println(vertex)
 	}
+	return pathMap
 }
