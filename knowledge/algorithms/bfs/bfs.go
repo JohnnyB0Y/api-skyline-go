@@ -43,3 +43,16 @@ func BFS(graph map[string][]string, startPoint string) map[string]string {
 	}
 	return pathMap
 }
+
+// 两点间最短路径
+func ShortestPathP2P(graph map[string][]string, start, end string) (paths []string) {
+	pathMap := BFS(graph, start)
+	for end != "" {
+		paths = append(paths, end)
+		end = pathMap[end]
+	}
+	for i, j := 0, len(paths)-1; i < j; i, j = i+1, j-1 {
+		paths[i], paths[j] = paths[j], paths[i]
+	}
+	return
+}

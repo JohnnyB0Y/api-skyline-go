@@ -21,13 +21,9 @@ func TestBFS(t *testing.T) {
 		"F": {"D"},
 	}
 
-	pathMap := BFS(graph, "A")
-	// A ==> F 最短距离
-	des := "F"
-	for des != "" {
-		fmt.Println(des)
-		des = pathMap[des]
-	}
+	fmt.Println(":::", ShortestPathP2P(graph, "A", "F"))
+	fmt.Println(":::", ShortestPathP2P(graph, "A", "D"))
+	fmt.Println(":::", ShortestPathP2P(graph, "E", "A"))
 
 	fmt.Println("---------------------------------------------------")
 	DFS(graph, "A")
