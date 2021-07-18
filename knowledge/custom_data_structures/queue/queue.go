@@ -69,7 +69,6 @@ func (q *queue) Dequeue() (item id, err error) {
 	}
 
 	item = q.arr[q.head]
-	// fmt.Println("dequeue:", item)
 	q.arr[q.head] = ""
 	q.head = q.nextHead()
 

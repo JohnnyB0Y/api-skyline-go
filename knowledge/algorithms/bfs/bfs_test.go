@@ -6,7 +6,10 @@
 
 package bfs
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestBFS(t *testing.T) {
 	graph := map[string][]string{
@@ -19,4 +22,6 @@ func TestBFS(t *testing.T) {
 	}
 
 	BFS(graph, "A")
+	fmt.Println("---------------------------------------------------")
+	DFS(graph, "A")
 }
