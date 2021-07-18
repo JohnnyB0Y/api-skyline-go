@@ -8,16 +8,17 @@ package queue
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
 func TestQueue(t *testing.T) {
-	q := NewQueue([]int{3, 4, 2, 1})
+	q := NewQueue([]id{"3", "4", "2", "1"}, 4)
 
 	fmt.Println(q.Dequeue())
 
 	for i := 0; i < 2; i++ {
-		err := q.Enqueue(i + 20)
+		err := q.Enqueue(id(strconv.Itoa(i + 20)))
 		result := "✔️"
 		if err != nil {
 			result = "×"
@@ -35,7 +36,7 @@ func TestQueue(t *testing.T) {
 
 	i := 0
 	for {
-		err := q.Enqueue(i)
+		err := q.Enqueue(id(strconv.Itoa(i)))
 		if err != nil {
 			break
 		}
@@ -84,11 +85,11 @@ func TestPriorityQueue(t *testing.T) {
 }
 
 func queuePrintAll(q *queue) {
-	q.Enumerate(func(idx, val int) (stop bool) {
+	q.Enumerate(func(idx int, val id) (stop bool) {
 		if idx == 0 {
 			fmt.Print("[ ")
 		}
-		fmt.Printf("%d ", val)
+		fmt.Printf("%s ", val)
 		if idx == q.length-1 {
 			fmt.Println("]", q.length)
 		}
