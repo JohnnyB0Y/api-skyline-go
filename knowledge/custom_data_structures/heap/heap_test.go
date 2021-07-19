@@ -7,28 +7,46 @@
 package heap
 
 import (
+	"api-skyline-go/knowledge/custom_data_structures/item"
 	"fmt"
 	"testing"
 )
 
+type MyInt struct {
+	val int
+}
+
+func (i MyInt) ComparisonKey() int {
+	return i.val
+}
+
 func TestHeap(t *testing.T) {
-	h := NewHeap([]int{2, 3, 5, 7, 15, 0, 17})
+	ints := []item.ItemContainer{
+		MyInt{1}, MyInt{3}, MyInt{5}, MyInt{7}, MyInt{15}, MyInt{0}, MyInt{17},
+	}
+
+	h := NewHeap(ints)
 	heapPrintAll(&h)
 	heapPopAll(&h)
 
-	h.Build([]int{1, 2, 10, 3, 17})
+	ints2 := []item.ItemContainer{
+		MyInt{1}, MyInt{2}, MyInt{10}, MyInt{3}, MyInt{17},
+	}
+	h.Build(ints2)
 	heapPrintAll(&h)
-	h.Pop()
-	h.Pop()
+	v1, _ := h.Pop()
+	v2, _ := h.Pop()
+	fmt.Printf("v1 %v v2 %v\n", v1, v2)
 	heapPrintAll(&h)
 
-	h.Push(50)
-	h.Push(11)
+	h.Push(MyInt{50})
+	h.Push(MyInt{11})
 	heapPrintAll(&h)
 	heapPopAll(&h)
 }
 
 func heapPopAll(h *Heap) {
+	fmt.Print("[")
 	for {
 		val, err := h.Pop()
 		if err != nil {
@@ -36,11 +54,11 @@ func heapPopAll(h *Heap) {
 		}
 		fmt.Printf("%d ", val)
 	}
-	fmt.Println()
+	fmt.Println("]")
 }
 
 func heapPrintAll(h *Heap) {
-	h.Enumerate(func(idx, val int) (stop bool) {
+	h.Enumerate(func(idx int, val item.ItemContainer) (stop bool) {
 		if idx == 0 {
 			fmt.Print("[ ")
 		}

@@ -7,24 +7,25 @@
 package heap
 
 import (
+	"api-skyline-go/knowledge/custom_data_structures/item"
 	"errors"
 )
 
 type Heap struct {
-	arr    []int
+	arr    []item.ItemContainer
 	length int
 }
 
-func NewHeap(arr []int) Heap {
+func NewHeap(arr []item.ItemContainer) Heap {
 	var h Heap = Heap{}
 	h.Build(arr)
 	return h
 }
 
-func (h *Heap) Pop() (int, error) {
+func (h *Heap) Pop() (item.ItemContainer, error) {
 
 	if h.length <= 0 {
-		return 0, errors.New("no element baby")
+		return nil, errors.New("no element baby")
 	}
 
 	// 最后的叶子 和 0 号位交换
@@ -35,7 +36,7 @@ func (h *Heap) Pop() (int, error) {
 	return val, nil
 }
 
-func (h *Heap) Push(val int) error {
+func (h *Heap) Push(val item.ItemContainer) error {
 	if h.length >= len(h.arr) {
 		// 数组越界了
 		return errors.New("out of bounds baby")
@@ -62,7 +63,7 @@ func (h *Heap) Push(val int) error {
 }
 
 // 枚举遍历堆
-func (h *Heap) Enumerate(fn func(idx, val int) (stop bool)) {
+func (h *Heap) Enumerate(fn func(idx int, val item.ItemContainer) (stop bool)) {
 	for i := 0; i < h.length; i++ {
 		stop := fn(i, h.arr[i])
 		if stop {
@@ -71,12 +72,12 @@ func (h *Heap) Enumerate(fn func(idx, val int) (stop bool)) {
 	}
 }
 
-func (h *Heap) Build(arr []int) {
+func (h *Heap) Build(arr []item.ItemContainer) {
 	h.arr = arr
 	h.length = len(arr)
 	// 最后一个父节点
 	for i := h.length/2 - 1; i >= 0; i-- {
-		h.heapify(i, false)
+		h.heapify(i, true)
 	}
 }
 
@@ -123,17 +124,17 @@ func (h *Heap) canSwapLeft(left, right, parent int) bool {
 		return false
 	}
 
-	if right >= h.length && h.arr[left] > h.arr[parent] {
+	if right >= h.length && h.arr[left].ComparisonKey() > h.arr[parent].ComparisonKey() {
 		return true
 	}
-	return h.arr[left] > h.arr[parent]
+	return h.arr[left].ComparisonKey() > h.arr[parent].ComparisonKey()
 }
 
 func (h *Heap) canSwapRight(left, right, parent int) bool {
 	if right >= h.length {
 		return false
 	}
-	return h.arr[right] > h.arr[left] && h.arr[right] > h.arr[parent]
+	return h.arr[right].ComparisonKey() > h.arr[left].ComparisonKey() && h.arr[right].ComparisonKey() > h.arr[parent].ComparisonKey()
 }
 
 func (h *Heap) swap(src, des int) {

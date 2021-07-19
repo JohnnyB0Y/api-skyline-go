@@ -11,6 +11,11 @@ type Item struct {
 	Val *interface{}
 }
 
+type ItemContainer interface {
+	// 转换成可比较的 key
+	ComparisonKey() int
+}
+
 // const (
 // 	// 相等
 // 	equal = iota
