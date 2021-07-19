@@ -7,10 +7,19 @@
 package queue
 
 import (
+	"api-skyline-go/knowledge/custom_data_structures/item"
 	"fmt"
 	"strconv"
 	"testing"
 )
+
+type MyInt struct {
+	val int
+}
+
+func (i MyInt) ComparisonKey() int {
+	return i.val
+}
 
 func TestQueue(t *testing.T) {
 	q := NewQueue([]id{"3", "4", "2", "1"}, 4)
@@ -50,11 +59,11 @@ func TestQueue(t *testing.T) {
 }
 
 func TestPriorityQueue(t *testing.T) {
-	pq := NewPriorityQueue([]int{3, 4, 2, 1})
+	pq := NewPriorityQueue([]item.ItemContainer{MyInt{3}, MyInt{4}, MyInt{2}, MyInt{1}})
 	fmt.Println(pq.Dequeue())
 
 	for i := 0; i < 2; i++ {
-		err := pq.Enqueue(i + 20)
+		err := pq.Enqueue(MyInt{i + 20})
 		result := "✔️"
 		if err != nil {
 			result = "×"
@@ -72,7 +81,7 @@ func TestPriorityQueue(t *testing.T) {
 
 	i := 0
 	for {
-		err := pq.Enqueue(i)
+		err := pq.Enqueue(MyInt{i})
 		if err != nil {
 			break
 		}
@@ -98,7 +107,7 @@ func queuePrintAll(q *queue) {
 }
 
 func priorityQueuePrintAll(pq *PriorityQueue) {
-	pq.Enumerate(func(idx, val int) (stop bool) {
+	pq.Enumerate(func(idx int, val item.ItemContainer) (stop bool) {
 		if idx == 0 {
 			fmt.Print("[ ")
 		}
