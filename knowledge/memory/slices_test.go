@@ -1,3 +1,9 @@
+//  slices_test.go
+//
+//
+//  Created by JohnnyB0Y on 2021/07/19.
+//  Copyright © 2021 JohnnyB0Y. All rights reserved.
+
 package memory_test
 
 import (
