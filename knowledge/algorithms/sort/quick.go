@@ -57,10 +57,6 @@ func partition(nums *[]int, low, hight int) int {
 	return start - 1
 }
 
-func processTwoNums(nums *[]int, low, hight int) {
-
-}
-
 func swap(nums *[]int, low, hight int) {
 	if low == hight {
 		return
