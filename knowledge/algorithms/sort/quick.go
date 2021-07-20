@@ -18,7 +18,7 @@ func QuickSort(nums []int) {
 		low := fragment[0]
 		hight := fragment[1]
 
-		fmt.Println("start:", fragment, q)
+		fmt.Println("start:", "fragment:", fragment, "queue:", q)
 		if hight > low { // hight=low 表示一个元素，hight>low 表示两个及以上，一个元素跳过不处理
 			N := hight - low + 1 // hight=1 low=0 两个元素；hight>1 low=0 三个及以上;
 			if N == 2 {          // 刚好两个数，处理并跳过！！！
