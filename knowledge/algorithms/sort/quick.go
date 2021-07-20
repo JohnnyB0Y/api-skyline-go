@@ -14,17 +14,17 @@ func QuickSort(nums []int) {
 
 	for len(q) > 0 {
 		fragment := q[0]
-		q = q[1:]
-		// fmt.Println(fragment, q)
+		q = q[1:] // 模拟队列弹出操作
 		low := fragment[0]
 		hight := fragment[1]
-		fmt.Println("start:", fragment, q)
-		if hight != -1 && hight > low { // -1 表示只有 low 一个元素; hight=low 表示一个元素
-			// hight=1 low=0 两个元素；hight>1 low=0 三个及以上;
 
-			N := hight - low + 1
-			if N == 2 && nums[low] > nums[hight] { // 刚好两个数，如果 low > hight 直接交换，并跳过！！！
-				swap(&nums, low, hight)
+		fmt.Println("start:", fragment, q)
+		if hight > low { // hight=low 表示一个元素，hight>low 表示两个及以上，一个元素跳过不处理
+			N := hight - low + 1 // hight=1 low=0 两个元素；hight>1 low=0 三个及以上;
+			if N == 2 {          // 刚好两个数，处理并跳过！！！
+				if nums[low] > nums[hight] { // 如果 low > hight 直接交换
+					swap(&nums, low, hight)
+				}
 				continue
 			}
 			// 切割
