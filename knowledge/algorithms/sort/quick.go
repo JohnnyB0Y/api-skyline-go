@@ -6,6 +6,10 @@
 
 package sort
 
+import (
+	"sync"
+)
+
 // 快速排序
 func QuickSort(nums []int) {
 	var q [][]int = make([][]int, 0, 10)
@@ -66,6 +70,52 @@ func swap(nums *[]int, low, hight int) {
 }
 
 // 多 goroutine 快速排序
-func QuickSortByMultiGoroutine(nums []int) {
+func QuickSortWithMultiGoroutine(nums []int, goroutines int) {
 
+	qc := make(chan []int, goroutines) // 放数组切片的管道
+	qc <- []int{0, len(nums) - 1}      // 放入首个待处理的元素范围
+	var count int32 = 1                // goroutine 计数
+	var mutex sync.Mutex               // 锁
+
+	for fragment := range qc { // 从管道取出数据，管道关闭后退出
+
+		// Start Go!
+		go func(fragment []int) {
+			// 切割中心轴
+			low, hight := fragment[0], fragment[1]
+			pivot := partition(&nums, low, hight)
+
+			// 处理左边
+			fLLow, fLHight := low, pivot-1
+			if fLHight-fLLow+1 == 2 && nums[fLLow] > nums[fLHight] { // 两个元素，如果 low > hight 直接交换
+				swap(&nums, fLLow, fLHight)
+			} else if fLHight > fLLow { // 三个元素以上，放入管道
+				mutex.Lock()
+				count += 1 // 放入管道，就 +1
+				mutex.Unlock()
+				qc <- []int{fLLow, fLHight}
+			}
+
+			// 处理右边
+			fRLow, fRHight := pivot+1, hight
+			if fRHight-fRLow+1 == 2 && nums[fRLow] > nums[fRHight] { // 两个元素，如果 low > hight 直接交换
+				swap(&nums, fRLow, fRHight)
+			} else if fRHight > fRLow { // 三个元素以上，放入管道
+				mutex.Lock()
+				count += 1 // 放入管道，就 +1
+				mutex.Unlock()
+				qc <- []int{fRLow, fRHight}
+			}
+
+			// End Go!
+			mutex.Lock()
+			count -= 1 // 处理完，-1
+			if count == 0 {
+				count -= 1 // 避免通道多次关闭
+				close(qc)
+			}
+			mutex.Unlock()
+
+		}(fragment)
+	}
 }
