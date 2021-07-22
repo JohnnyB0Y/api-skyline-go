@@ -50,7 +50,7 @@ func merge(left, right []int) []int {
 }
 
 // 多线程归并搜索
-func MergeSortByMultithreading(nums []int) []int {
+func MergeSortByMultiGoroutine(nums []int) []int {
 
 	return nums
 }

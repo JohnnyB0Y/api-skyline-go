@@ -65,6 +65,6 @@ func swap(nums *[]int, low, hight int) {
 }
 
 // 多线程快速搜索
-func QuickSortByMultithreading(nums []int) {
+func QuickSortByMultiGoroutine(nums []int) {
 
 }
