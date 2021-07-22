@@ -48,3 +48,9 @@ func merge(left, right []int) []int {
 	}
 	return nums
 }
+
+// 多线程归并搜索
+func MergeSortByMultithreading(nums []int) []int {
+
+	return nums
+}
