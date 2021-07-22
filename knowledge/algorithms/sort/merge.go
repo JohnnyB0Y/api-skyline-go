@@ -6,6 +6,7 @@
 
 package sort
 
+// 归并排序
 func MergeSort(nums []int) []int {
 	N := len(nums)
 	// 结束条件
@@ -49,7 +50,7 @@ func merge(left, right []int) []int {
 	return nums
 }
 
-// 多线程归并搜索
+// 多 goroutine 归并排序
 func MergeSortByMultiGoroutine(nums []int) []int {
 
 	return nums

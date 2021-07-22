@@ -6,6 +6,7 @@
 
 package sort
 
+// 快速排序
 func QuickSort(nums []int) {
 	var q [][]int = make([][]int, 0, 10)
 	q = append(q, []int{0, len(nums) - 1}) // 放入首个待处理的元素范围
@@ -64,7 +65,7 @@ func swap(nums *[]int, low, hight int) {
 	(*nums)[low], (*nums)[hight] = (*nums)[hight], (*nums)[low]
 }
 
-// 多线程快速搜索
+// 多 goroutine 快速排序
 func QuickSortByMultiGoroutine(nums []int) {
 
 }
