@@ -63,3 +63,8 @@ func swap(nums *[]int, low, hight int) {
 	}
 	(*nums)[low], (*nums)[hight] = (*nums)[hight], (*nums)[low]
 }
+
+// 多线程快速搜索
+func QuickSortByMultithreading(nums []int) {
+
+}
