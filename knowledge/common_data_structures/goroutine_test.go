@@ -23,3 +23,9 @@ routine: 使计算机执行某一特定任务的指令列表；
 	- iOS的线程栈是固定的，APP主线程 1M，用户创建的线程 512K，不同系统版本可能会有变化；
 
 */
+
+/**
+runtime.NumCPU()       // 返回当前CPU内核数
+runtime.GOMAXPROCS(2)  // 设置运行时最大可执行CPU数
+runtime.NumGoroutine() // 当前正在运行的goroutine 数
+*/

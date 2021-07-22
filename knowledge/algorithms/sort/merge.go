@@ -6,6 +6,10 @@
 
 package sort
 
+import (
+	"sync"
+)
+
 // 归并排序
 func MergeSort(nums []int) []int {
 	N := len(nums)
@@ -51,7 +55,37 @@ func merge(left, right []int) []int {
 }
 
 // 多 goroutine 归并排序
-func MergeSortByMultiGoroutine(nums []int) []int {
+func MergeSortWithMultiGoroutine(nums []int, goroutines int) []int {
+
+	if len(nums) < 3 {
+		return MergeSort(nums)
+	}
+
+	var wg sync.WaitGroup
+	wg.Add(goroutines)
+
+	// 按goroutine数切分
+	fragment := len(nums) / goroutines
+	results := make([][]int, goroutines)
+	for g := 0; g < goroutines; g++ {
+		go func(g int) {
+			start := g * fragment
+			end := start + fragment
+			if g == goroutines-1 { // 最后一个
+				end = len(nums)
+			}
+			results[g] = MergeSort(nums[start:end]) // 记录每条 goroutine完成的结果
+			wg.Done()
+		}(g)
+	}
+
+	wg.Wait()
+
+	// 合并, 4 x 4 <=等价=> 2 x 2 x 2 x 2
+	nums = results[0] // 取出第一个
+	for i := 1; i < len(results); i++ {
+		nums = merge(nums, results[i])
+	}
 
 	return nums
 }
