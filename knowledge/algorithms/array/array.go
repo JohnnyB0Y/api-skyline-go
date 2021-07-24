@@ -177,10 +177,17 @@ func rotate(nums []int, k int) {
 	// [3,4,5,6,1,2]
 	// [3,4,5,6,1,2]
 
+	// k = 3
+	// [1,2,3,4,5,6]
+	// 1 -> 4; 4 -> 1;
+	// 2 -> 5; 5 -> 2;
+	// 3 -> 6; 6 -> 3;
+	// [4,5,6,1,2,3]
+
 	// 倒着走
 	length := len(nums)
 
-	if length < k {
+	if length < k { // k 大于 数组个数时，去掉多余移动的步数
 		k = k % length
 	}
 
@@ -188,65 +195,29 @@ func rotate(nums []int, k int) {
 		return
 	}
 
-	temp := 0
-	j := 0
-	count := 0
-	first := 0
-	if length%k == 0 {
-		// 整除
-		for i := 0; i < k; i++ {
-			j = length - k + i
-			temp = nums[i]
-			// nums[0] = nums[6]
-			// nums[1] = nums[7]
-			// nums[2] = nums[8]
-			nums[i] = nums[j]
-			for j > k+i {
-				// nums[6] = nums[3]
-				// nums[7] = nums[4]
-				// nums[8] = nums[5]
-				nums[j] = nums[j-k]
-				j -= k
-			}
-			// nums[3] = temp
-			// nums[4] = temp
-			// nums[5] = temp
-			nums[j] = temp
-		}
-	} else {
-		// 不整除
-		// k = 4
-		// [1,2,3,4,(5),6,7]
-		// 1 -> 5; 5 -> 2; 2 -> 6; 6 -> 3; 3 -> 7; 7 -> 4; 4 -> 1;
-		// [4,5,6,7,(1),2,3]
-		for count < length {
-			j = length - k + first
-			temp = nums[first]
-			// nums[0] = nums[3]
-			nums[first] = nums[j]
-			count += 1
-			for j != first {
-				next := j - k
-				if next < 0 {
-					next = length + next
-				}
-				// nums[3] = nums[6]
-				// nums[6] = nums[2]
-				// nums[2] = nums[5]
-				// nums[5] = nums[1]
-				// nums[1] = nums[4]
-				nums[j] = nums[next]
-				count += 1
-				if next == first { // 回到原点
-					// nums[4] = nums[0]
-					nums[j] = temp
-					break
-				}
-				j = next
+	// 临时存放 待覆盖 计数   轮数
+	var temp, fill, count, round int
+	for count < length {
+		fill = length - k + round
+		temp = nums[round]
+		nums[round] = nums[fill]
+		count += 1
+		for fill != round {
+			next := fill - k
+			if next < 0 { // 循环下标
+				next = length + next
 			}
 
+			if next == round { // 回到原点，此轮结束！
+				nums[fill] = temp
+				count += 1
+				break
+			}
+
+			nums[fill] = nums[next]
 			count += 1
-			first += 1
+			fill = next
 		}
+		round += 1 // 下一轮
 	}
 }
