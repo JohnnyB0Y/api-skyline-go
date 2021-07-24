@@ -280,3 +280,33 @@ func singleNumber(nums []int) int {
 	}
 	return val
 }
+
+/**
+两个数组的交集 II
+给定两个数组，编写一个函数来计算它们的交集。
+*/
+
+func intersect(nums1 []int, nums2 []int) []int {
+	src := nums1
+	des := nums2
+	if len(nums1) > len(nums2) {
+		src = nums2
+		des = nums1
+	}
+
+	// nums1 = [1,2,2,1], nums2 = [2,2]
+	set := make(map[int]int)
+	for i := 0; i < len(src); i++ {
+		set[src[i]] += 1
+	}
+
+	result := make([]int, 0, 4)
+	for i := 0; i < len(des); i++ {
+		if val := set[des[i]]; val > 0 {
+			// 找到了
+			result = append(result, des[i])
+			set[des[i]] -= 1
+		}
+	}
+	return result
+}
