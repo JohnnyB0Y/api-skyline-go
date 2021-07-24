@@ -18,7 +18,7 @@
 
 package array
 
-func removeDuplicates(nums []int) int {
+func RemoveDuplicates(nums []int) int {
 	length := len(nums)
 	if length < 2 {
 		return length
@@ -48,4 +48,23 @@ func removeDuplicates(nums []int) int {
 		}
 	}
 	return length
+}
+
+func RemoveDuplicates2(nums []int) int {
+	length := len(nums)
+	if length < 2 {
+		return length
+	}
+	// fill 待填充的数组下标, find 寻找不同数字的数组下标
+	fill, find := 1, 1
+	for find < length {
+		if nums[find-1] == nums[find] { // 相等，继续找
+			find++
+		} else { // 不相等
+			nums[fill] = nums[find]
+			fill++
+			find++
+		}
+	}
+	return fill
 }
