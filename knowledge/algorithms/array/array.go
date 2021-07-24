@@ -134,7 +134,7 @@ func MaxProfit(prices []int) int {
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 */
 
-func rotate(nums []int, k int) {
+func Rotate(nums []int, k int) {
 	// k = 3
 	// [1,2,3,(4),5,6,7]
 	// 1 -> 4; 4 -> 7; 7 -> 3; 3 -> 6; 6 -> 2; 2 -> 5; 5 -> 1;
