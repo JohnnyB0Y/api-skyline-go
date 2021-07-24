@@ -19,19 +19,19 @@
 package array
 
 func RemoveDuplicates(nums []int) int {
-	length := len(nums)
-	if length < 2 {
-		return length
+	N := len(nums)
+	if N < 2 {
+		return N
 	}
 
 	cur, next := 0, 1
-	for next < length {
+	for next < N {
 		// 不相等
 		if nums[cur] != nums[next] {
-			for i := 1; i < length-next+1; i++ {
+			for i := 1; i < N-next+1; i++ {
 				nums[cur+i] = nums[next+i-1]
 			}
-			length -= next - cur - 1
+			N -= next - cur - 1
 			cur++
 			next = cur + 1
 			continue
@@ -40,24 +40,24 @@ func RemoveDuplicates(nums []int) int {
 		next++
 
 		// next走到最后 ? 把后面的重复项去除
-		if next >= length {
-			for i := 1; i < length-next+1; i++ {
+		if next >= N {
+			for i := 1; i < N-next+1; i++ {
 				nums[cur+i] = nums[next+i-1]
 			}
-			length -= next - cur - 1
+			N -= next - cur - 1
 		}
 	}
-	return length
+	return N
 }
 
 func RemoveDuplicates2(nums []int) int {
-	length := len(nums)
-	if length < 2 {
-		return length
+	N := len(nums)
+	if N < 2 {
+		return N
 	}
 	// fill 待填充的数组下标, find 寻找不同数字的数组下标
 	fill, find := 1, 1
-	for find < length {
+	for find < N {
 		if nums[find-1] == nums[find] { // 相等，继续找
 			find++
 		} else { // 不相等
@@ -88,14 +88,14 @@ func RemoveDuplicates2(nums []int) int {
 func MaxProfit(prices []int) int {
 	// 遇到低就买入，遇到最高就卖出
 	// 寻找下一个低点，循环
-	length := len(prices)
-	if length < 2 {
+	N := len(prices)
+	if N < 2 {
 		return 0
 	}
 	//  0 1 2 3 4 5
 	// [7,1,5,3,6,4]
 	buy, sale, profit := 0, 0, 0
-	for buy < length-1 {
+	for buy < N-1 {
 		// 当前价格高于下一个价格
 		if prices[buy] > prices[buy+1] {
 			buy++ // 继续找买入点
@@ -104,8 +104,8 @@ func MaxProfit(prices []int) int {
 
 		// 走到这里，算是找到了买入点，开始找卖出点
 		sale = buy + 1
-		for sale < length {
-			if sale == length-1 || prices[sale] > prices[sale+1] { // sale 是最后一个 或 比下一个价格高 就不找了
+		for sale < N {
+			if sale == N-1 || prices[sale] > prices[sale+1] { // sale 是最后一个 或 比下一个价格高 就不找了
 				profit += prices[sale] - prices[buy]
 				buy = sale + 1 // 下一轮
 				break
@@ -185,27 +185,27 @@ func Rotate(nums []int, k int) {
 	// [4,5,6,1,2,3]
 
 	// 倒着走
-	length := len(nums)
+	N := len(nums)
 
-	if length < k { // k 大于 数组个数时，去掉多余移动的步数
-		k = k % length
+	if N < k { // k 大于 数组个数时，去掉多余移动的步数
+		k = k % N
 	}
 
-	if k == 0 || length < 1 || length == k {
+	if k == 0 || N < 1 || N == k {
 		return
 	}
 
 	// 临时存放 待覆盖 计数   轮数
 	var temp, fill, count, round int
-	for count < length {
-		fill = length - k + round
+	for count < N {
+		fill = N - k + round
 		temp = nums[round]
 		nums[round] = nums[fill]
 		count += 1
 		for fill != round {
 			next := fill - k
 			if next < 0 { // 循环下标
-				next = length + next
+				next = N + next
 			}
 
 			if next == round { // 回到原点，此轮结束！
@@ -220,4 +220,34 @@ func Rotate(nums []int, k int) {
 		}
 		round += 1 // 下一轮
 	}
+}
+
+/**
+存在重复元素
+给定一个整数数组，判断是否存在重复元素。
+
+如果存在一值在数组中出现至少两次，函数返回 true 。如果数组中每个元素都不相同，则返回 false 。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x248f5/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func containsDuplicate(nums []int) bool {
+	N := len(nums)
+	if N <= 1 {
+		return false
+	}
+
+	set := make(map[int]bool)
+	for i := 0; i < N; i++ {
+		if _, ok := set[nums[i]]; ok {
+			// 找到
+			return true
+		}
+		set[nums[i]] = true
+	}
+
+	return false
 }
