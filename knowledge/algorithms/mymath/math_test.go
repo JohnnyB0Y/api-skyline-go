@@ -9,7 +9,11 @@ package mymath
 import "testing"
 
 func TestCountPrimes(t *testing.T) {
+	t.Log(countPrimes(100))
 	t.Log(countPrimes2(100))
 	t.Log(countPrimes3(100))
+
+	t.Log(countPrimes(7))
+	t.Log(countPrimes2(7))
 	t.Log(countPrimes3(7))
 }
