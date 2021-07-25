@@ -186,7 +186,9 @@ func slicingSortedArray(nums []int) (pivot *TreeNode, leftArr, rightArr []int) {
 	mid := len(nums) / 2
 	pivot = &TreeNode{}
 	pivot.Val = nums[mid]
-	leftArr = nums[0:mid]
+	if mid != 0 {
+		leftArr = nums[0:mid]
+	}
 	if mid+1 < len(nums) {
 		rightArr = nums[mid+1:]
 	}
