@@ -102,3 +102,50 @@ func SieveOfEratosthenes(num int) []int {
 	}
 	return primes
 }
+
+func countPrimes3(n int) int {
+	if n <= 2 {
+		return 0
+	}
+
+	N := n
+	if N%2 != 0 { // 奇数变成偶数
+		N += 1
+	}
+
+	// 去除 2 的倍数
+	N = N / 2
+	isNotPrimes := make([]bool, N)
+	isNotPrimes[0] = true
+
+	count := 1 // 这个是把2计算在内
+	p := 1
+	for ; p*p < N; p++ {
+		// 把非素数标出来
+		if !isNotPrimes[p] {
+			count++ // 素数加起来
+			step := p*2 + 1
+			for i := p + step; i < N; i += step {
+				// 1 -> 4 -> 7 -> 10
+				// 2 -> 7 -> 12 ->
+				isNotPrimes[i] = true
+			}
+		}
+	}
+
+	// 统计后半段的质数
+	lastPrime := 1 // 这个是 3 的下标
+	for ; p < N; p++ {
+		if !isNotPrimes[p] {
+			count++ // 素数加起来
+			lastPrime = p
+		}
+	}
+
+	// 判断 n是否质数，按题目排除
+	if lastPrime*2+1 == n {
+		count-- // 去除自己
+	}
+
+	return count
+}
