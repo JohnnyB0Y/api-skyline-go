@@ -6,6 +6,10 @@
 
 package tree
 
+import (
+	"math"
+)
+
 /*
 二叉树的最大深度
 给定一个二叉树，找出其最大深度。
@@ -35,4 +39,43 @@ func maxDepth(root *TreeNode) int {
 		return left + 1
 	}
 	return right + 1
+}
+
+/**
+验证二叉搜索树
+给定一个二叉树，判断其是否是一个有效的二叉搜索树。
+
+假设一个二叉搜索树具有如下特征：
+
+节点的左子树只包含小于当前节点的数。
+节点的右子树只包含大于当前节点的数。
+所有左子树和右子树自身必须也是二叉搜索树。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xn08xg/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func isValidBST(root *TreeNode) bool {
+	return isValidBSTInScope(root, math.MinInt64, math.MaxInt64)
+}
+
+func isValidBSTInScope(root *TreeNode, leftMin, rightMax int) bool {
+	if root == nil {
+		return true
+	}
+
+	// 左 > root ? 并且 左 < min ？
+	if root.Left != nil && (root.Left.Val >= root.Val || root.Left.Val <= leftMin) {
+		return false
+	}
+
+	// 右 < root ?
+	if root.Right != nil && (root.Right.Val <= root.Val || root.Right.Val >= rightMax) {
+		return false
+	}
+
+	// 左右 == true ？
+	return isValidBSTInScope(root.Left, leftMin, root.Val) && isValidBSTInScope(root.Right, root.Val, rightMax)
 }
