@@ -7,6 +7,7 @@
 package tree
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -78,4 +79,65 @@ func isValidBSTInScope(root *TreeNode, leftMin, rightMax int) bool {
 
 	// 左右 == true ？
 	return isValidBSTInScope(root.Left, leftMin, root.Val) && isValidBSTInScope(root.Right, root.Val, rightMax)
+}
+
+/**
+对称二叉树
+给定一个二叉树，检查它是否是镜像对称的。
+
+
+例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xn7ihv/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func isSymmetric(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+
+	// 不对称
+	if (root.Left == nil && root.Right != nil) || (root.Left != nil && root.Right == nil) {
+		return false
+	}
+
+	// 左子树 == 右子树
+	left := sumOfTree(root.Left, true)
+	right := sumOfTree(root.Right, false)
+	fmt.Println(left, right)
+	return left == right
+}
+
+// 计算树的总值
+func sumOfTree(root *TreeNode, isLeft bool) int {
+	if root == nil {
+		return 0
+	}
+
+	left := sumOfTree(root.Left, isLeft)
+	right := sumOfTree(root.Right, isLeft)
+
+	if isLeft { // * 10 * 3 是为了扩大数据的差异，便于比较差异，实际是有漏洞的
+		return (right*10 - left*3) + root.Val
+	}
+
+	return (left*10 - right*3) + root.Val
 }

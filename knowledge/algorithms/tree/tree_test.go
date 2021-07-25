@@ -26,3 +26,22 @@ func TestMaxDepth(t *testing.T) {
 
 	t.Log(maxDepth(&root))
 }
+
+func TestIsSymmetric(t *testing.T) {
+	root := TreeNode{}
+	root.Val = 1
+
+	root.Left = &TreeNode{}
+	root.Left.Val = 2
+
+	root.Right = &TreeNode{}
+	root.Right.Val = 2
+
+	root.Left.Right = &TreeNode{}
+	root.Left.Right.Val = 3
+
+	root.Right.Right = &TreeNode{}
+	root.Right.Right.Val = 3
+
+	t.Log(isSymmetric(&root))
+}
