@@ -181,8 +181,6 @@ func isAnagram(s string, t string) bool {
 	chars := make([]int, 26)
 	for i := 0; i < len(s); i++ {
 		chars[int(s[i])-97] += 1
-	}
-	for i := 0; i < len(t); i++ {
 		chars[int(t[i])-97] -= 1
 	}
 
