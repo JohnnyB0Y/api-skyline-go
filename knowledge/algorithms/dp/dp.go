@@ -21,8 +21,21 @@ package dp
 */
 
 func climbStairs(n int) int {
+	// i = 1 ==> 1
+	// i = 2 ==> 2
+	// i = n ==> f(n-1) + f(n-2)
+	if n < 3 {
+		return n
+	}
 
-	return 0
+	preStep := 1
+	curStep := 2
+	for n > 2 { // 从第三阶开始
+		curStep = curStep + preStep
+		preStep = curStep - preStep
+		n--
+	}
+	return curStep
 }
 
 /**
