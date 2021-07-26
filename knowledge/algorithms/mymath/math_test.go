@@ -20,6 +20,10 @@ func TestCountPrimes(t *testing.T) {
 	t.Log(countPrimes4(7))
 }
 
+func TestIsPowerOfThree(t *testing.T) {
+	t.Log(isPowerOfThree(135005697))
+}
+
 func BenchmarkCountPrimes3(b *testing.B) {
 	// 100内：BenchmarkCountPrimes3-8   	10797572	      99.8 ns/op	      64 B/op	       1 allocs/op
 	// 100万：BenchmarkCountPrimes3-8   	     250	   4786838 ns/op	  507905 B/op	       1 allocs/op
