@@ -152,6 +152,7 @@ func countPrimes3(n int) int {
 	return count
 }
 
+// 使用 bit array
 func countPrimes4(n int) int {
 	if n <= 2 {
 		return 0
@@ -165,8 +166,7 @@ func countPrimes4(n int) int {
 	// 去除 2 的倍数
 	N = N / 2
 	isNotPrimes := bitarray.NewBitArray(uint64(N))
-	// isNotPrimes[0] = true
-	isNotPrimes.SetBit(0)
+	isNotPrimes.SetBit(0) // 下标0为1，是非质数
 
 	count := 1 // 这个是把2计算在内
 	var p uint64 = 1

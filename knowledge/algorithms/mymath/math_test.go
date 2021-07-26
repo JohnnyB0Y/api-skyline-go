@@ -37,8 +37,12 @@ func BenchmarkCountPrimes4(b *testing.B) {
 }
 
 /**
-寻找 100 以内质数时，countPrimes3 比较优秀；
-当 寻找的质数提高到 100万 时，countPrimes4 性能和内存比较优秀；
+countPrimes3 用的是bool数组，性能比较优秀；
+countPrimes4 用的是 bit array，内存比较优秀；
 
-countPrimes3 用的是bool数组，countPrimes4 用的是 bit array；
+
+bit array 性能比 bool数组 低不少，但内存占用上比 bool数组 优秀，理论上内存占用只有 bool数组的 1/8;
+	- 由于主存访问以字节为基本单位，处理bit位增加了不少CPU消耗；
+	- 如果程序对内存比较敏感，那么使用 bit array 是不错的选择；
+	- 不然的话，没有必要优化到 bit 位；
 */
