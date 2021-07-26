@@ -363,10 +363,10 @@ func romanToInt(s string) int {
 				helper.subSumAdd(1, I) // 累计
 			}
 		case V:
-			if helper.ps == STOP {
-				helper.subSumAdd(5, V) // 累计
-			} else if helper.ps == I { // VI
+			if helper.ps == I { // VI
 				helper.sumAdd(5)
+			} else {
+				helper.subSumAdd(5, V) // 累计
 			}
 		case X:
 			if helper.ps == I { // XI
