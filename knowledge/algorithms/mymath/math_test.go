@@ -24,6 +24,25 @@ func TestIsPowerOfThree(t *testing.T) {
 	t.Log(isPowerOfThree(135005697))
 }
 
+func TestRomanToInt(t *testing.T) {
+	t.Log("--------------------------")
+	t.Log(romanToInt("III"), 3)
+	t.Log(romanToInt("IV"), 4)
+	t.Log(romanToInt("IX"), 9)
+	t.Log(romanToInt("LVIII"), 58)
+	t.Log(romanToInt("MCMXCIV"), 1994)
+	t.Log(romanToInt("MMMCMXCIV"), 3994)
+	t.Log(romanToInt("V"), 5)
+	t.Log(romanToInt("VII"), 7)
+	t.Log(romanToInt("XXVII"), 27)
+	t.Log(romanToInt("XLIX"), 49)
+	t.Log(romanToInt("CMXCIX"), 999)
+	t.Log(romanToInt("CX"), 110)
+	t.Log(romanToInt("MMCDXXV"), 2425)
+
+	t.Log("--------------------------")
+}
+
 func BenchmarkCountPrimes3(b *testing.B) {
 	// 100内：BenchmarkCountPrimes3-8   	10797572	      99.8 ns/op	      64 B/op	       1 allocs/op
 	// 100万：BenchmarkCountPrimes3-8   	     250	   4786838 ns/op	  507905 B/op	       1 allocs/op

@@ -288,3 +288,122 @@ func fizzBuzz(n int) []string {
 	}
 	return str
 }
+
+/**
+罗马数字转整数
+罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
+
+字符          数值
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
+
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+
+I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xn4n7c/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+const (
+	I    = 'I'
+	V    = 'V'
+	X    = 'X'
+	L    = 'L'
+	C    = 'C'
+	D    = 'D'
+	M    = 'M'
+	STOP = 'S'
+)
+
+type romanHelper struct {
+	sum    int  // 总和
+	subSum int  // 累计
+	ps     rune // 当前累计的符号
+}
+
+func (h *romanHelper) subSumAdd(num int, ps rune) {
+	h.subSum += num
+	h.ps = ps
+}
+
+func (h *romanHelper) sumDelelte(num int) {
+	h.sum += h.subSum - num
+	h.subSum = 0
+	h.ps = STOP
+}
+
+func (h *romanHelper) sumAdd(num int) {
+	h.sum += h.subSum + num
+	h.subSum = 0
+	h.ps = STOP
+}
+
+func romanToInt(s string) int {
+
+	helper := &romanHelper{0, 0, STOP}
+	// 从后往前扫
+	for i := len(s) - 1; i >= 0; i-- {
+		switch s[i] {
+		case I:
+			if helper.ps == STOP || helper.ps == I {
+				helper.subSumAdd(1, I) // 累计
+			} else if helper.ps == V || helper.ps == X { // IV XV
+				helper.sumDelelte(1)
+			}
+		case V:
+			if helper.ps == STOP {
+				helper.subSumAdd(5, V) // 累计
+			} else if helper.ps == I { // VI
+				helper.sumAdd(5)
+			}
+		case X:
+			if helper.ps == STOP || helper.ps == X || helper.ps == V {
+				helper.subSumAdd(10, X) // 累计
+			} else if helper.ps == I { // XI
+				helper.sumAdd(10)
+			} else if helper.ps == L || helper.ps == C { // XL XC
+				helper.sumDelelte(10)
+			}
+		case L:
+			if helper.ps == STOP {
+				helper.subSumAdd(50, L) // 累计
+			} else if helper.ps == X { // LX
+				helper.sumAdd(50)
+			}
+		case C:
+			if helper.ps == STOP || helper.ps == C || helper.ps == L || helper.ps == V {
+				helper.subSumAdd(100, C) // 累计
+			} else if helper.ps == X { // CX
+				helper.sumAdd(100)
+			} else if helper.ps == D || helper.ps == M { // CD CM
+				helper.sumDelelte(100)
+			}
+		case D:
+			if helper.ps == STOP {
+				helper.subSumAdd(500, D) // 累计
+			} else if helper.ps == C { // DC
+				helper.sumAdd(500)
+			}
+		case M:
+			if helper.ps == STOP || helper.ps == M || helper.ps == D || helper.ps == L || helper.ps == V {
+				helper.subSumAdd(1000, M) // 累计
+			} else if helper.ps == C { // MC
+				helper.sumAdd(1000)
+			}
+		}
+	}
+	helper.sumAdd(0)
+	return helper.sum
+}
