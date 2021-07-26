@@ -122,3 +122,40 @@ func firstUniqChar(s string) int {
 	}
 	return -1
 }
+
+// 不能给自带数据类型添加方法，So
+type ModernString string
+
+func NewModernString(s string) ModernString {
+	return ModernString(s)
+}
+
+// 前面往后找第一个元素
+func (s ModernString) FirstIndexOf(val byte) int {
+	for i := 0; i < len(s); i++ {
+		if s[i] == val {
+			return i
+		}
+	}
+	return -1
+}
+
+// 后面往前面找第一个元素
+func (s ModernString) LastIndexOf(val byte) int {
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == val {
+			return i
+		}
+	}
+	return -1
+}
+
+func firstUniqChar2(s string) int {
+	ms := NewModernString(s)
+	for i := 0; i < len(ms); i++ {
+		if ms.FirstIndexOf(ms[i]) == ms.LastIndexOf(ms[i]) {
+			return i
+		}
+	}
+	return -1
+}
