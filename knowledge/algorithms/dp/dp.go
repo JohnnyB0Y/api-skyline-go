@@ -67,6 +67,7 @@ func maxSubArray(nums []int) int {
 */
 
 func rob(nums []int) int {
+	// 间隔元素，取最大和
 
 	return 0
 }
