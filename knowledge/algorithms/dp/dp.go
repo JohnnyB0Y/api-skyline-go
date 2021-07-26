@@ -40,8 +40,33 @@ func climbStairs(n int) int {
 */
 
 func maxProfit(prices []int) int {
+	if len(prices) < 1 {
+		return 0
+	}
 
-	return 0
+	buy := prices[0]
+	money := 0
+
+	// 7, 1, 5, 3, 6, 4
+	// 7: money = 0 buy = 7
+	// 1: money = 0 buy = 1
+	// 5: money = 4 buy = 1
+	// 3: money = 4 buy = 1
+	// 6: money = 5 buy = 1
+	// 4: money = 5 buy = 1
+
+	for i := 1; i < len(prices); i++ {
+		// 看卖不卖
+		if money < prices[i]-buy {
+			money = prices[i] - buy
+		}
+		// 寻找最低点
+		if prices[i] < buy {
+			buy = prices[i]
+		}
+	}
+
+	return money
 }
 
 /**
