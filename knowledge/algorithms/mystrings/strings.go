@@ -81,3 +81,21 @@ func reverse(x int) int {
 
 	return int(newX64)
 }
+
+func reverse2(x int) int {
+	var x64 int64 = int64(x)
+	var newX64 int64 = 0
+	// newX64 = 0   x64 = 123 (初始状态)
+	// newX64 = 3   x64 = 12
+	// newX64 = 32  x64 = 1
+	// newX64 = 321 x64 = 0
+	for x64 != 0 {
+		newX64 = newX64*10 + (x64 % 10) // 取出最后一位数
+		x64 /= 10                       // 去掉最后一位数
+	}
+
+	if newX64 != int64(int32(newX64)) { // 不接受 64 位
+		return 0
+	}
+	return int(newX64)
+}
