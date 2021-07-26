@@ -99,3 +99,26 @@ func reverse2(x int) int {
 	}
 	return int(newX64)
 }
+
+/**
+字符串中的第一个唯一字符
+给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+*/
+
+func firstUniqChar(s string) int {
+	if len(s) < 1 {
+		return -1
+	}
+	charMap := map[byte]int{}
+
+	for i := 0; i < len(s); i++ {
+		charMap[s[i]] += 1
+	}
+
+	for i := 0; i < len(s); i++ {
+		if charMap[s[i]] == 1 {
+			return i
+		}
+	}
+	return -1
+}
