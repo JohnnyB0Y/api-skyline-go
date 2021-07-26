@@ -51,7 +51,24 @@ func maxProfit(prices []int) int {
 
 func maxSubArray(nums []int) int {
 
-	return 0
+	if len(nums) < 1 {
+		return 0
+	}
+	max := nums[0] // 第一个必须选
+	sum := max
+	for i := 1; i < len(nums); i++ {
+		// 更新 sum = Max{ nums[i], sum + nums[i] }
+		if nums[i] > sum+nums[i] {
+			sum = nums[i]
+		} else {
+			sum = sum + nums[i]
+		}
+		// 更新 max
+		if max < sum {
+			max = sum
+		}
+	}
+	return max
 }
 
 /**
