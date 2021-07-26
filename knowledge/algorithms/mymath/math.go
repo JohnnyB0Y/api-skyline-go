@@ -224,9 +224,13 @@ func isPowerOfThree(n int) bool {
 		27: true, 19683: true,
 		81: true, 59049: true,
 		243: true, 177147: true,
+		531441: true, 1594323: true,
+		4782969: true, 14348907: true,
+		43046721: true, 129140163: true,
+		387420489: true, 1162261467: true,
 	}
 
-	for i := 531441; i <= n; i *= 3 {
+	for i := 1162261467; i <= n; i *= 3 {
 		nums3[i] = true
 	}
 
