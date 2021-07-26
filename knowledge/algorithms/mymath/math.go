@@ -357,10 +357,10 @@ func romanToInt(s string) int {
 	for i := len(s) - 1; i >= 0; i-- {
 		switch s[i] {
 		case I:
-			if helper.ps == STOP || helper.ps == I {
-				helper.subSumAdd(1, I) // 累计
-			} else if helper.ps == V || helper.ps == X { // IV XV
+			if helper.ps == V || helper.ps == X { // IV XV
 				helper.sumDelelte(1)
+			} else {
+				helper.subSumAdd(1, I) // 累计
 			}
 		case V:
 			if helper.ps == STOP {
@@ -369,38 +369,38 @@ func romanToInt(s string) int {
 				helper.sumAdd(5)
 			}
 		case X:
-			if helper.ps == STOP || helper.ps == X || helper.ps == V {
-				helper.subSumAdd(10, X) // 累计
-			} else if helper.ps == I { // XI
+			if helper.ps == I { // XI
 				helper.sumAdd(10)
 			} else if helper.ps == L || helper.ps == C { // XL XC
 				helper.sumDelelte(10)
+			} else {
+				helper.subSumAdd(10, X) // 累计
 			}
 		case L:
-			if helper.ps == STOP {
-				helper.subSumAdd(50, L) // 累计
-			} else if helper.ps == X { // LX
+			if helper.ps == X { // LX
 				helper.sumAdd(50)
+			} else {
+				helper.subSumAdd(50, L) // 累计
 			}
 		case C:
-			if helper.ps == STOP || helper.ps == C || helper.ps == L || helper.ps == V {
-				helper.subSumAdd(100, C) // 累计
-			} else if helper.ps == X { // CX
+			if helper.ps == X { // CX
 				helper.sumAdd(100)
 			} else if helper.ps == D || helper.ps == M { // CD CM
 				helper.sumDelelte(100)
+			} else {
+				helper.subSumAdd(100, C) // 累计
 			}
 		case D:
-			if helper.ps == STOP {
-				helper.subSumAdd(500, D) // 累计
-			} else if helper.ps == C { // DC
+			if helper.ps == C { // DC
 				helper.sumAdd(500)
+			} else {
+				helper.subSumAdd(500, D) // 累计
 			}
 		case M:
-			if helper.ps == STOP || helper.ps == M || helper.ps == D || helper.ps == L || helper.ps == V {
-				helper.subSumAdd(1000, M) // 累计
-			} else if helper.ps == C { // MC
+			if helper.ps == C { // MC
 				helper.sumAdd(1000)
+			} else {
+				helper.subSumAdd(1000, M) // 累计
 			}
 		}
 	}
