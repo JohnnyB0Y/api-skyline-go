@@ -244,3 +244,12 @@ func isPowerOfThree2(n int) bool {
 	// 参考答案！！！
 	return 1162261467%n == 0
 }
+
+func isPowerOfThree3(n int) bool {
+	for i := 1; i <= n; i *= 3 {
+		if i == n {
+			return true
+		}
+	}
+	return false
+}
