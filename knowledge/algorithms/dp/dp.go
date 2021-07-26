@@ -67,7 +67,22 @@ func maxSubArray(nums []int) int {
 */
 
 func rob(nums []int) int {
-	// 间隔元素，取最大和
 
-	return 0
+	if len(nums) < 1 {
+		return 0
+	}
+
+	// 间隔元素，取最大和
+	total := []int{0, nums[0]} // 0，1
+
+	for i := 1; i < len(nums); i++ {
+		// total 填充了一个无选择时的状态 总价值为 0，所以这里的 i 和total不是对应的。
+		if nums[i]+total[i-1] > total[i] {
+			total = append(total, nums[i]+total[i-1])
+		} else {
+			total = append(total, total[i])
+		}
+	}
+
+	return total[len(total)-1]
 }
