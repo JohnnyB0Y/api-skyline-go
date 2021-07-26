@@ -194,3 +194,51 @@ func slicingSortedArray(nums []int) (pivot *TreeNode, leftArr, rightArr []int) {
 	}
 	return
 }
+
+/**
+二叉树的层序遍历
+给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnldjj/
+*/
+type treesNodes = [][]*TreeNode
+type treesNode = []*TreeNode
+
+func levelOrder(root *TreeNode) [][]int {
+
+	if root == nil {
+		return nil
+	}
+
+	q := treesNodes{
+		treesNode{root.Left, root.Right},
+	}
+	arr := [][]int{{root.Val}}
+
+	for len(q) > 0 {
+		// 出队
+		nodes := q[0]
+		q = q[1:]
+
+		vals := []int{}
+		children := treesNode{}
+
+		for i := 0; i < len(nodes); i++ {
+			node := nodes[i]
+			if node != nil {
+				// 放入数据
+				vals = append(vals, node.Val)
+				children = append(children, node.Left, node.Right)
+			}
+		}
+
+		if len(vals) > 0 {
+			arr = append(arr, vals)
+		}
+
+		if len(children) > 0 {
+			q = append(q, children)
+		}
+	}
+
+	return arr
+}
