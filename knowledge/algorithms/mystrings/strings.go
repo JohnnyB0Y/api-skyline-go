@@ -306,7 +306,75 @@ func myAtoi(s string) int {
 
 func strStr(haystack string, needle string) int {
 	// 用这个 strings.Index(haystack, needle)，算不算不讲武德？
-	return strings.Index(haystack, needle)
+	// return strings.Index(haystack, needle)
+
+	if len(haystack) < len(needle) {
+		return -1
+	}
+
+	if len(needle) == 0 {
+		return 0
+	}
+
+	ft := FallbackTableForStringNoMatching(needle)
+	var i, j int
+	for i < len(haystack) {
+		if haystack[i] != needle[j] { // 不匹配
+			if j == 0 {
+				i++ // needle的第一个元素比较失败，需要移动i
+			} else {
+				j = ft[j-1] // 回退
+			}
+			continue
+		}
+		if j >= len(needle)-1 { // 匹配了最后一个
+			return i - len(needle) + 1
+		}
+
+		// 如果还可以，下一轮
+		i++
+		j++
+	}
+	return -1
+}
+
+// 字符匹配失败的回退表
+func FallbackTableForStringNoMatching(s string) map[int]int {
+	ft := map[int]int{}
+	if len(s) < 2 { // 字符数少于2，返回一个零值回退表
+		return ft
+	}
+	i, j := 0, 1
+	k, l, nextI := 0, 0, 0
+	for j < len(s) {
+		if s[i] == s[j] { // 匹配到
+			ft[j] = i + 1
+			i++
+			j++
+		} else { // 没有匹配到，下一轮
+			nextI = 0
+			if i > 0 && s[j] == s[i-1] { // a == a
+				k = i - 2
+				l = j - 1
+				matching := true
+				for k >= 0 { // 回叙
+					if s[k] != s[l] {
+						matching = false
+						break
+					}
+					k--
+					l--
+				}
+				if matching {
+					ft[j] = ft[j-1]
+					nextI = i // 下一个还会是 a 吗？
+				}
+			}
+			i = nextI
+			j++
+		}
+	}
+	return ft
 }
 
 /**

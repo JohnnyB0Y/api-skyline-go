@@ -22,3 +22,14 @@ func TestIsPalindrome(t *testing.T) {
 	t.Log(isPalindrome("race a car"))
 
 }
+
+func TestStrStr(t *testing.T) {
+	t.Log("--------------------------------------------")
+	t.Log(strStr("hello", "ll"), "ll", 2)
+	t.Log(strStr("aaaaa", "bba"), "bba", -1)
+	t.Log(strStr("", ""), 0)
+	t.Log(strStr("mississippi", "issip"), "issip", 4)
+	t.Log(strStr("mississippi", "pi"), "pi", 9)
+	t.Log(strStr("aabaaabaaac", "aabaaac"), "aabaaac", 4)
+	t.Log(strStr("adcadcaddcadde", "adcadde"), "adcadde", -1)
+}
