@@ -32,4 +32,13 @@ func TestStrStr(t *testing.T) {
 	t.Log(strStr("mississippi", "pi"), "pi", 9)
 	t.Log(strStr("aabaaabaaac", "aabaaac"), "aabaaac", 4)
 	t.Log(strStr("adcadcaddcadde", "adcadde"), "adcadde", -1)
+
+}
+
+func TestIndexOfKMPSearch(t *testing.T) {
+	t.Log(SubstringIndexsOf("aabaaabaaac", "aabaaac"), "aabaaac", 1)
+	t.Log(SubstringIndexsOf("adcadcaddcadde", "adcadde"), "adcadde", 0)
+	t.Log(SubstringIndexsOf("ababccbabab", "abab"), "abab", 2)
+	t.Log(SubstringIndexsOf("ababccbabab", "ab"), "ab", 4)
+	t.Log(SubstringIndexsOf("ababccbabab", "b"), "b", 5)
 }

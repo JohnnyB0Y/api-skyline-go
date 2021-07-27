@@ -307,41 +307,53 @@ func myAtoi(s string) int {
 func strStr(haystack string, needle string) int {
 	// 用这个 strings.Index(haystack, needle)，算不算不讲武德？
 	// return strings.Index(haystack, needle)
-
-	if len(haystack) < len(needle) {
-		return -1
+	if len(needle) != 0 {
+		matching := SubstringIndexsOf(haystack, needle)
+		if len(matching) == 0 { // 没有匹配到
+			return -1
+		}
+		return matching[0]
 	}
+	return 0 // 空字符串
+}
 
-	if len(needle) == 0 {
-		return 0
+func SubstringIndexsOf(haystack string, needle string) []int { // KMP 算法
+	len_N := len(needle)
+	len_H := len(haystack)
+	matching := []int{}
+	if len_N == 0 || len_H < len_N {
+		return matching
 	}
 
 	ft := FallbackTableForStringNoMatching(needle)
 	var i, j int
-	for i < len(haystack) {
+	for i < len_H {
 		if haystack[i] != needle[j] { // 不匹配
 			if j == 0 {
 				i++ // needle的第一个元素比较失败，需要移动i
 			} else {
 				j = ft[j-1] // 回退
 			}
-			continue
+			continue // 跳过
 		}
-		if j >= len(needle)-1 { // 匹配了最后一个
-			return i - len(needle) + 1
+		if j >= len_N-1 { // 匹配到一个
+			matching = append(matching, i-len_N+1)
+			if j == 0 {
+				j = -1 // 单个元素匹配，为了抵消下面的 j++
+			} else {
+				j = ft[j-1]
+			}
 		}
-
-		// 如果还可以，下一轮
-		i++
+		i++ // 如果还可以，下一轮
 		j++
 	}
-	return -1
+	return matching
 }
 
 // 字符匹配失败的回退表
 func FallbackTableForStringNoMatching(s string) map[int]int {
 	ft := map[int]int{}
-	if len(s) < 2 { // 字符数少于2，返回一个零值回退表
+	if len(s) < 3 { // 字符数少于3，返回一个零值回退表
 		return ft
 	}
 	i, j := 0, 1
@@ -357,7 +369,7 @@ func FallbackTableForStringNoMatching(s string) map[int]int {
 				k = i - 2
 				l = j - 1
 				matching := true
-				for k >= 0 { // 回叙
+				for k >= 0 { // 回叙匹配，极端情况下这里会消耗很多性能，应该有优化空间吧？
 					if s[k] != s[l] {
 						matching = false
 						break
