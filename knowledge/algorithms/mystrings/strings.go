@@ -9,6 +9,7 @@ package mystrings
 import (
 	"bytes"
 	"strconv"
+	"strings"
 )
 
 /**
@@ -280,4 +281,76 @@ func isCharAndNum(val int8) bool {
 
 func myAtoi(s string) int {
 
+	return 0
+}
+
+/**
+实现 strStr()
+实现 strStr() 函数。
+
+给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回  -1 。
+
+
+
+说明：
+
+当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+
+对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与 C 语言的 strstr() 以及 Java 的 indexOf() 定义相符。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnr003/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func strStr(haystack string, needle string) int {
+
+	return 0
+}
+
+/**
+外观数列
+给定一个正整数 n ，输出外观数列的第 n 项。
+
+「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
+
+你可以将其视作是由递归公式定义的数字字符串序列：
+
+countAndSay(1) = "1"
+countAndSay(n) 是对 countAndSay(n-1) 的描述，然后转换成另一个数字字符串。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnpvdm/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func countAndSay(n int) string {
+
+	return ""
+}
+
+/**
+最长公共前缀
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+*/
+
+func longestCommonPrefix(strs []string) string {
+	if len(strs) < 1 {
+		return ""
+	}
+	// 我只想到了，字母遍历一个一个比较，遇到不同就返回；
+	// 下面这个方法很巧妙！
+
+	prefix := strs[0] // 把第一个字符串作为前缀
+	for i := 0; i < len(strs); i++ {
+		for strings.Index(strs[i], prefix) != 0 { // 判断字符串是否包含前缀，位置 0 开始才是前缀
+			prefix = prefix[:len(prefix)-1]
+		}
+	}
+
+	return prefix
 }
