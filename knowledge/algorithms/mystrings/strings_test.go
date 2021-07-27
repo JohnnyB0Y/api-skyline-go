@@ -15,3 +15,10 @@ func TestFirstUniqChar(t *testing.T) {
 	t.Log(firstUniqChar2(""))
 	t.Log(firstUniqChar2("v"))
 }
+
+func TestIsPalindrome(t *testing.T) {
+	t.Log(isPalindrome("A man, a plan, a canal: Panama"))
+	t.Log(isPalindrome(":::::"))
+	t.Log(isPalindrome("race a car"))
+
+}

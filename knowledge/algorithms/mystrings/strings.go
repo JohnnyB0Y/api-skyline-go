@@ -192,3 +192,64 @@ func isAnagram(s string, t string) bool {
 
 	return true
 }
+
+/**
+验证回文串
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+
+说明：本题中，我们将空字符串定义为有效的回文串。
+*/
+
+func isPalindrome(s string) bool {
+	left, right := 0, len(s)-1
+	var val1, val2 int8
+	for left < right {
+		val1 = int8(s[left])
+		if !isCharAndNum(val1) { // 判断是否有效字母
+			left++
+			continue // 不符合要求，继续往下找
+		}
+		for {
+			val2 = int8(s[right])
+			if !isCharAndNum(val2) { // 判断是否有效字母
+				right--
+				continue // 不符合要求，继续往下找
+			}
+			if !isCharAndNumEqual(val1, val2) {
+				return false // 不相等，不是回文
+			}
+			right-- // 是回文，进行下一轮
+			break
+		}
+		left++ // 下一轮
+	}
+	return true
+}
+
+func isCharAndNumEqual(val1, val2 int8) bool {
+	if val1 > 90 {
+		val1 -= 32
+	}
+	if val2 > 90 {
+		val2 -= 32
+	}
+	return val1 == val2
+}
+
+func isCharAndNum(val int8) bool {
+	/**
+	a-z：97-122
+	A-Z：65-90
+	0-9：48-57
+	*/
+	if val < 48 || val > 122 {
+		return false
+	}
+	if val > 57 && val < 65 {
+		return false
+	}
+	if val > 90 && val < 97 {
+		return false
+	}
+	return true
+}
