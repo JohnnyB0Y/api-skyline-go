@@ -310,3 +310,20 @@ func intersect(nums1 []int, nums2 []int) []int {
 	}
 	return result
 }
+
+/**
+移动零
+给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+*/
+
+func moveZeroes(nums []int) {
+	start := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[start] == 0 && nums[i] > 0 { // 大于 0，交换
+			nums[start], nums[i] = nums[i], nums[start]
+		}
+		if nums[start] != 0 { // start 不等于0 跟着走
+			start++
+		}
+	}
+}
