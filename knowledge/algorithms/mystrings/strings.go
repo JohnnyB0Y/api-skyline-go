@@ -305,8 +305,8 @@ func myAtoi(s string) int {
 */
 
 func strStr(haystack string, needle string) int {
-
-	return 0
+	// 用这个 strings.Index(haystack, needle)，算不算不讲武德？
+	return strings.Index(haystack, needle)
 }
 
 /**
