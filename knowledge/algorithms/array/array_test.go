@@ -19,3 +19,9 @@ func TestIntersect(t *testing.T) {
 	t.Log(intersect([]int{1, 2, 2, 1}, []int{2, 2}))
 	t.Log(intersect([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
 }
+
+func TestPlusOne(t *testing.T) {
+	t.Log(plusOne([]int{1, 2, 2, 1}))
+	t.Log(plusOne([]int{9, 8, 9}))
+	t.Log(plusOne([]int{9, 9, 9, 9}))
+}

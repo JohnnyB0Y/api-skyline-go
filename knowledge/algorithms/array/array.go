@@ -312,6 +312,45 @@ func intersect(nums1 []int, nums2 []int) []int {
 }
 
 /**
+加一
+给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
+
+最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
+
+你可以假设除了整数 0 之外，这个整数不会以零开头。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2cv1c/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+func plusOne(digits []int) []int {
+	if digits[0] == 0 {
+		return []int{1}
+	}
+
+	N := len(digits)
+	if digits[N-1] != 9 {
+		digits[N-1] += 1
+		return digits
+	}
+
+	for i := N - 1; i >= 0; i-- {
+		digits[i] = digits[i] + 1
+		if digits[i]%10 == 0 {
+			digits[i] = 0
+		} else {
+			break
+		}
+	}
+
+	if digits[0] == 0 {
+		digits = append([]int{1}, digits...)
+	}
+	return digits
+}
+
+/**
 移动零
 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
 */
