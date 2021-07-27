@@ -319,7 +319,7 @@ func intersect(nums1 []int, nums2 []int) []int {
 func moveZeroes(nums []int) {
 	start := 0
 	for i := 1; i < len(nums); i++ {
-		if nums[start] == 0 && nums[i] > 0 { // 大于 0，交换
+		if nums[start] == 0 && nums[i] != 0 { // 大于 0，交换
 			nums[start], nums[i] = nums[i], nums[start]
 		}
 		if nums[start] != 0 { // start 不等于0 跟着走
