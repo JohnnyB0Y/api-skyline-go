@@ -25,3 +25,8 @@ func TestPlusOne(t *testing.T) {
 	t.Log(plusOne([]int{9, 8, 9}))
 	t.Log(plusOne([]int{9, 9, 9, 9}))
 }
+
+func TestTwoSum(t *testing.T) {
+	t.Log(twoSum2([]int{2, 7, 11, 15}, 9))
+	t.Log(twoSum2([]int{3, 2, 4}, 6))
+}

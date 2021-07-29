@@ -388,3 +388,15 @@ func twoSum(nums []int, target int) []int {
 	}
 	return []int{}
 }
+
+func twoSum2(nums []int, target int) []int {
+	appear := map[int]int{}
+	for i := 0; i < len(nums); i++ {
+		remainder := target - nums[i]         // target - nums[i] = remainder；
+		if idx, ok := appear[remainder]; ok { // remainder 出现过 ？
+			return []int{idx, i} // target = nums[i] + nums[idx]
+		}
+		appear[nums[i]] = i // 未命中，在 appear 记录
+	}
+	return []int{}
+}
