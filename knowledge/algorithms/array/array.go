@@ -502,3 +502,64 @@ func isValidSudoku(board [][]byte) bool {
 	}
 	return true
 }
+
+/**
+旋转图像
+给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+
+你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnhhkv/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func rotate(matrix [][]int) {
+
+	len_N := len(matrix)
+	if len_N < 2 {
+		return
+	}
+	// i 走 i - 1 圈
+	var tmp int
+	for i := 0; i < len_N-1; i++ {
+		tmp = matrix[i][0]
+		// 1 4
+
+		// (3,0) ==> (0,0)
+		// (3,1) ==> (1,0)
+		// (3,2) ==> (2,0)
+		matrix[i][0] = matrix[len_N-1][i]
+		// 7 -> 1; 8 -> 4
+
+		// (3,3) ==> (3,0)
+		// (2,3) ==> (3,1)
+		// (1,3) ==> (3,2)
+		matrix[len_N-1][i] = matrix[len_N-1-i][len_N-1]
+		// 9 -> 7
+
+		// (0,3) ==> (3,3)
+		// (0,2) ==> (2,3)
+		// (0,1) ==> (1,3)
+		matrix[len_N-1-i][len_N-1] = matrix[0][len_N-1-i]
+		// 3 -> 9
+
+		// (0,0) ==> (0,3)
+		// (1,0) ==> (0,2)
+		// (2,0) ==> (0,1)
+		matrix[0][len_N-1-i] = tmp
+		// 1 -> 3
+	}
+
+	if len_N-2 < 2 {
+		return
+	}
+
+	subMatrix := make([][]int, len_N-2)
+	for i := 1; i < len_N-1; i++ {
+		subMatrix[i-1] = matrix[i][1 : len_N-1]
+	}
+	// 继续
+	rotate(subMatrix)
+}
