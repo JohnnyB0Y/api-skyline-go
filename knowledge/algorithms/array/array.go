@@ -18,6 +18,8 @@
 
 package array
 
+import "fmt"
+
 func RemoveDuplicates(nums []int) int {
 	N := len(nums)
 	if N < 2 {
@@ -421,7 +423,7 @@ func twoSum2(nums []int, target int) []int {
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 */
 
-func isValidSudoku(board [][]byte) bool {
+func isValidSudoku2(board [][]byte) bool {
 	appear := map[int]bool{}
 	len_Row := len(board)
 	len_Col := len_Row
@@ -452,6 +454,50 @@ func isValidSudoku(board [][]byte) bool {
 				return false
 			}
 			appear[keyM] = true // 把它加进去
+		}
+	}
+	return true
+}
+
+func isValidSudoku(board [][]byte) bool {
+	// 答案提到用位运算！！！！
+	// 位运算 49 ~ 57
+	appearRow := make([]int16, 9)
+	appearCol := make([]int16, 9)
+	appearMesh := make([]int16, 9)
+	int16_1 := int16(1)
+
+	for row := 0; row < 9; row++ {
+		for col := 0; col < 9; col++ {
+			if board[row][col] == '.' {
+				continue // 这个略过
+			}
+			target := int16(board[row][col] - '0') // 算出数字 0 ~ 9
+			bitIdx := int16_1 << target
+			fmt.Println(target, ":", bitIdx)
+			// 在 row 里面找？？？
+			fmt.Println("row:", appearRow[row]&bitIdx > 0)
+			if appearRow[row]&bitIdx > 0 { // 与运算，1-1 得 1；1-0，0-0 得 0；
+				return false
+			}
+			appearRow[row] |= bitIdx // 或运算，1-0，1-1 得 1；0-0 得 0；
+
+			// 在 col 里面找？？？
+			fmt.Println("col:", appearCol[col]&bitIdx > 0)
+			if appearCol[col]&bitIdx > 0 {
+				return false
+			}
+			appearCol[col] |= bitIdx // 把它加进去
+
+			// 在网格找？？？
+			// 0, 1，2，3，4，5，6，7，8
+			meshIdx := (row/3)*3 + col/3
+			fmt.Println("mesh:", appearMesh[meshIdx]&bitIdx > 0)
+			if appearMesh[meshIdx]&bitIdx > 0 { // 在里面找到了，就无效了
+				return false
+			}
+			appearMesh[meshIdx] |= bitIdx // 把它加进去
+
 		}
 	}
 	return true
