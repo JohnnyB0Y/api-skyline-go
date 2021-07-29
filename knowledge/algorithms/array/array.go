@@ -400,3 +400,59 @@ func twoSum2(nums []int, target int) []int {
 	}
 	return []int{}
 }
+
+/**
+有效的数独
+请你判断一个 9x9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。
+
+数字 1-9 在每一行只能出现一次。
+数字 1-9 在每一列只能出现一次。
+数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。（请参考示例图）
+数独部分空格内已填入了数字，空白格用 '.' 表示。
+
+注意：
+
+一个有效的数独（部分已被填充）不一定是可解的。
+只需要根据以上规则，验证已经填入的数字是否有效即可。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2f9gg/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func isValidSudoku(board [][]byte) bool {
+	appear := map[int]bool{}
+	len_Row := len(board)
+	len_Col := len_Row
+
+	for row := 0; row < len_Row; row++ {
+		for col := 0; col < len_Col; col++ {
+			if board[row][col] == '.' {
+				continue // 这个略过
+			}
+			// row 行字典
+			keyR := 10000 + row*100 + int(board[row][col]) // 0 ~ 9 行
+			// col 列字典
+			keyC := 20000 + col*100 + int(board[row][col]) // 0 ~ 9 列
+			// 3x3网格字典
+			keyM := 30000 + row/3*100 + col/3*1000 + int(board[row][col]) // 0 ~ 9 3x3网格
+
+			if has := appear[keyR]; has { // 在里面找到了，就无效了
+				return false
+			}
+			appear[keyR] = true // 把它加进去
+
+			if has := appear[keyC]; has { // 在里面找到了，就无效了
+				return false
+			}
+			appear[keyC] = true // 把它加进去
+
+			if has := appear[keyM]; has { // 在里面找到了，就无效了
+				return false
+			}
+			appear[keyM] = true // 把它加进去
+		}
+	}
+	return true
+}
