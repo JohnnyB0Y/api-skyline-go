@@ -563,3 +563,43 @@ func rotate(matrix [][]int) {
 	// 继续
 	rotate(subMatrix)
 }
+
+/**
+合并两个有序数组
+给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
+
+初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，这样它就有足够的空间保存来自 nums2 的元素。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnumcr/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+func merge(nums1 []int, m int, nums2 []int, n int) {
+	len_Nk := len(nums1)      // 完整nums1 数组长度
+	len_Nj := len(nums2)      // nums2 数组长度
+	len_Ni := len_Nk - len_Nj // nums1 有效数字的数组长度
+	i := len_Ni - 1
+	j := len_Nj - 1
+	k := len_Nk - 1
+	for k >= 0 {
+		switch {
+		case i < 0: // i 走完
+			nums1[k] = nums2[j]
+			k--
+			j--
+		case j < 0: // j 走完
+			nums1[k] = nums1[i]
+			k--
+			i--
+		case nums1[i] >= nums2[j]:
+			nums1[k] = nums1[i]
+			k--
+			i--
+		case nums1[i] < nums2[j]:
+			nums1[k] = nums2[j]
+			k--
+			j--
+		}
+	}
+}
