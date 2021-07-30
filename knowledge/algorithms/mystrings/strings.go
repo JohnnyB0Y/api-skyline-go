@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"strconv"
 	"strings"
+	"unsafe"
 )
 
 /**
@@ -407,8 +408,23 @@ countAndSay(n) 是对 countAndSay(n-1) 的描述，然后转换成另一个数�
 */
 
 func countAndSay(n int) string {
-
-	return ""
+	nums := []byte{'1'}
+	for i := 2; i < n+1; i++ {
+		tmp := []byte{}
+		read := nums[0]
+		count := byte('1')
+		for i := 1; i < len(nums); i++ {
+			if read == nums[i] { // 相同
+				count++
+			} else { // 不同
+				tmp = append(tmp, count, read)
+				count = byte('1')
+				read = nums[i]
+			}
+		}
+		nums = append(tmp, count, read)
+	}
+	return *(*string)(unsafe.Pointer(&nums))
 }
 
 /**
