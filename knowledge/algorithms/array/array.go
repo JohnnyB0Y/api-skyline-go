@@ -718,11 +718,9 @@ func (this *Solution) Shuffle() []int {
 	rand.Seed(time.Now().UnixNano())
 	len_N := len(this.nums)
 	new_Nums := append([]int{}, this.nums...)
-	fmt.Println(new_Nums)
 	for i := 0; i < len_N; i++ {
 		idx := rand.Intn(len_N)
 		new_Nums[i], new_Nums[idx] = new_Nums[idx], new_Nums[i] // 交换数据
 	}
-	fmt.Println(new_Nums)
 	return new_Nums
 }
