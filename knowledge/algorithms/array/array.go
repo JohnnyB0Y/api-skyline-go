@@ -18,7 +18,11 @@
 
 package array
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func RemoveDuplicates(nums []int) int {
 	N := len(nums)
@@ -650,4 +654,61 @@ func firstBadVersion(n int) int {
 // 模拟而已
 func isBadVersion(version int) bool {
 	return true
+}
+
+/**
+打乱数组
+给你一个整数数组 nums ，设计算法来打乱一个没有重复元素的数组。
+
+实现 Solution class:
+
+Solution(int[] nums) 使用整数数组 nums 初始化对象
+int[] reset() 重设数组到它的初始状态并返回
+int[] shuffle() 返回数组随机打乱后的结果
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xn6gq1/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+type Solution struct {
+	nums []int
+}
+
+func Constructor(nums []int) Solution {
+	return Solution{nums: nums}
+}
+
+/** Resets the array to its original configuration and return it. */
+func (this *Solution) Reset() []int {
+	return this.nums
+}
+
+/** Returns a random shuffling of the array. */
+func (this *Solution) Shuffle() []int {
+
+	rand.Seed(time.Now().UnixNano())
+	len_N := len(this.nums)
+	new_Nums := make([]int, len_N)
+	queue := make([][]int, 0, len_N/2)
+	queue = append(queue, this.nums)
+
+	for i := 0; i < len_N; i++ {
+		subnums := queue[0]
+		queue = queue[1:]
+
+		idx := rand.Intn(len(subnums))
+		new_Nums[i] = subnums[idx] // 保存数据
+
+		if idx > 0 {
+			queue = append(queue, subnums[:idx])
+		}
+
+		if idx+1 < len(subnums) {
+			queue = append(queue, subnums[idx+1:])
+		}
+	}
+
+	return new_Nums
 }
