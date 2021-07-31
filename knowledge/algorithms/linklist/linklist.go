@@ -53,3 +53,32 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	hand.Next = nil
 	return head
 }
+
+/**
+回文链表
+请判断一个链表是否为回文链表。
+https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnv1oc/
+*/
+func isPalindrome(head *ListNode) bool {
+
+	if head == nil || head.Next == nil {
+		return true
+	}
+
+	nodes := make([]*ListNode, 0, 10)
+	for head != nil {
+		nodes = append(nodes, head)
+		head = head.Next
+	}
+
+	i, j := 0, len(nodes)-1
+	for i < j {
+		if nodes[i].Val != nodes[j].Val {
+			return false
+		}
+		i++
+		j--
+	}
+
+	return true
+}
