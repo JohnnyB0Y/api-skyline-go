@@ -127,3 +127,26 @@ func hasCycle2(head *ListNode) bool {
 	}
 	return false
 }
+
+func hasCycle(head *ListNode) bool {
+	rand.Seed(time.Now().UnixNano())
+	fast := head
+	slow := head
+	for fast != nil {
+		step := rand.Intn(4) + 2
+		for i := 0; i < step; i++ { // 随机走几步
+			if fast != nil {
+				fast = fast.Next
+				if i%2 != 0 {
+					slow = slow.Next
+				}
+				if fast == slow {
+					return true
+				}
+			} else {
+				return false
+			}
+		}
+	}
+	return false
+}
