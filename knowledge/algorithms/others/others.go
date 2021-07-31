@@ -142,3 +142,40 @@ func reverseBits(num uint32) uint32 {
 	}
 	return num2
 }
+
+/**
+杨辉三角
+给定一个非负整数 numRows，生成「杨辉三角」的前 numRows 行。
+
+在「杨辉三角」中，每个数是它左上方和右上方的数的和。
+*/
+func generate(numRows int) [][]int {
+	/**
+	      [1]
+	     [1,1]
+	    [1,2,1]
+	   [1,3,3,1]
+	  [1,4,6,4,1]
+	*/
+	results := make([][]int, 0, numRows)
+	switch {
+	case numRows > 0 && numRows < 2:
+		results = append(results, []int{1})
+	case numRows >= 2:
+		results = append(results, []int{1}, []int{1, 1})
+	}
+	for i := 2; i < numRows; i++ {
+		result := make([]int, 0, i+1)
+		result = append(result, 1) // 前
+
+		lastResult := results[i-1]
+		for k := 0; k < i-1; k++ { // 中
+			result = append(result, lastResult[k]+lastResult[k+1])
+		}
+
+		result = append(result, 1) // 后
+		// 放入
+		results = append(results, result)
+	}
+	return results
+}
