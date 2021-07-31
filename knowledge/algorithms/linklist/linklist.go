@@ -128,7 +128,7 @@ func hasCycle2(head *ListNode) bool {
 	return false
 }
 
-func hasCycle(head *ListNode) bool {
+func hasCycle3(head *ListNode) bool {
 	rand.Seed(time.Now().UnixNano())
 	fast := head
 	slow := head
@@ -146,6 +146,19 @@ func hasCycle(head *ListNode) bool {
 			} else {
 				return false
 			}
+		}
+	}
+	return false
+}
+
+func hasCycle(head *ListNode) bool {
+	fast := head
+	slow := head
+	for fast != nil && fast.Next != nil && fast.Next.Next != nil {
+		fast = fast.Next.Next.Next
+		slow = slow.Next
+		if fast == slow {
+			return true
 		}
 	}
 	return false
