@@ -179,3 +179,59 @@ func generate(numRows int) [][]int {
 	}
 	return results
 }
+
+/**
+有效的括号
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+
+有效字符串需满足：
+
+左括号必须用相同类型的右括号闭合。
+左括号必须以正确的顺序闭合。
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnbcaj/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+
+func isValid(s string) bool {
+
+	stack := make([]byte, 0, 10)
+	for i := 0; i < len(s); i++ {
+		if isRight(s[i]) { // 右边，需要从栈中取出配对的括号
+			len_N := len(stack)
+			if len_N < 1 || !isPair(stack[len_N-1], s[i]) { // 栈里没元素，说明没有配对
+				return false
+			}
+			stack = stack[:len_N-1] // 如果配对,出栈
+		} else {
+			stack = append(stack, s[i]) // 左括号往里塞
+		}
+	}
+	return len(stack) == 0
+}
+
+func isPair(left, right byte) bool {
+	switch {
+	case left == '(' && right == ')':
+		return true
+	case left == '[' && right == ']':
+		return true
+	case left == '{' && right == '}':
+		return true
+	}
+	return false
+}
+
+func isRight(left byte) bool {
+	switch {
+	case left == ')':
+		return true
+	case left == ']':
+		return true
+	case left == '}':
+		return true
+	}
+	return false
+}
