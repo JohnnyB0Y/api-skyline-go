@@ -281,8 +281,49 @@ func isCharAndNum(val int8) bool {
 */
 
 func myAtoi(s string) int {
+	// 取符号
+	read := 0
+	len_N := len(s)
+	isDelete := false
+	for read < len_N {
+		if s[read] != ' ' && s[read] != '-' && s[read] != '+' {
+			break // 不是空格，不是’-‘号
+		} else if s[read] == '-' {
+			isDelete = true
+			read++
+			break
+		} else if s[read] == '+' {
+			read++
+			break
+		}
+		read++
+	}
+	// 取数字
+	num := 0
+	maxInt32 := 2147483648 // go 居然没有类型最值常量？？？
+	for read < len_N {
+		if s[read] <= '9' && s[read] >= '0' { // 有效数字
+			num = num*10 + int(s[read]-'0')
+			if num > maxInt32 {
+				num = maxInt32
+				break
+			}
+		} else { // 不是数字，退出
+			break
+		}
+		read++
+	}
 
-	return 0
+	if isDelete {
+		if num >= maxInt32 {
+			return -maxInt32
+		}
+		return -num
+	}
+	if num >= maxInt32 {
+		return maxInt32 - 1
+	}
+	return num
 }
 
 /**

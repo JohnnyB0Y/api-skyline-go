@@ -42,3 +42,11 @@ func TestIndexOfKMPSearch(t *testing.T) {
 	t.Log(SubstringIndexsOf("ababccbabab", "ab"), "ab", 4)
 	t.Log(SubstringIndexsOf("ababccbabab", "b"), "b", 5)
 }
+
+func TestMyAtoi(t *testing.T) {
+	t.Log(myAtoi("42"), "42", 42)
+	t.Log(myAtoi("9223372036854775808"), "9223372036854775808", 2147483647)
+	t.Log(myAtoi("-010"), "-010", -10)
+	t.Log(myAtoi("01"), "01", 1)
+	t.Log(myAtoi("+1"), "+1", 1)
+}
