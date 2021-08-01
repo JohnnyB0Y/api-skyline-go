@@ -176,8 +176,43 @@ k 是一个正整数，它的值小于或等于链表的长度。
 你可以设计一个只使用常数额外空间的算法来解决此问题吗？
 你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。
 */
-
 func reverseKGroup(head *ListNode, k int) *ListNode {
+	if head == nil || head.Next == nil || k < 2 {
+		return head
+	}
 
-	return nil
+	var hand *ListNode
+	var tail *ListNode
+	nodes := make([]*ListNode, 0, k)
+	for head != nil {
+		for i := 0; i < k; i++ {
+			nodes = append(nodes, head)
+			head = head.Next
+			if head == nil {
+				break
+			}
+		}
+		if len(nodes) == k { // 满足 k个元素
+			for i := k - 1; i > 0; i-- {
+				if hand == nil {
+					hand = nodes[i] // 第一个元素
+				}
+				nodes[i].Next = nodes[i-1] // 翻转元素
+				nodes[i-1].Next = nil
+			}
+			if tail != nil {
+				tail.Next = nodes[k-1] // 让链表尾部连上
+			}
+			tail = nodes[0]   // 记录链表尾部
+			nodes = nodes[:0] // 清空数组
+		} else { // 不满足k个元素
+			if hand == nil { // 链表没有 k个元素
+				return nodes[0]
+			} else if len(nodes) > 0 { // 把最后的元素连接上
+				tail.Next = nodes[0]
+				return hand
+			}
+		}
+	}
+	return hand
 }
