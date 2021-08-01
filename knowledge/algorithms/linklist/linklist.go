@@ -216,3 +216,39 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	}
 	return hand
 }
+
+func reverseKGroup2(head *ListNode, k int) *ListNode {
+	var pre, cur, next, newHead, newTail *ListNode
+	cur = head // 从第一个开始
+	for cur != nil {
+		for i := 0; i < k; i++ { // 少于 k个不翻转
+			if cur == nil {
+				if newTail != nil {
+					newTail.Next = head // 可能是最后一组
+					return newHead
+				} else {
+					return head
+				}
+			}
+			cur = cur.Next
+		}
+
+		cur = head               // 交换开始
+		for i := 0; i < k; i++ { // 翻转一组，共k个
+			next = cur.Next // 记录下一个
+			cur.Next = pre  // 翻转当前元素
+			pre = cur       // 记录上一个
+			cur = next      // 进入下一个
+		}
+		if newTail != nil {
+			newTail.Next = pre // 尾巴指向当前组的头部
+		}
+		if newHead == nil {
+			newHead = pre // 记录头部
+		}
+		newTail = head // 记录尾部
+		head = cur     // 下一轮
+		pre = nil
+	}
+	return newHead
+}
