@@ -258,9 +258,96 @@ func reverseKGroup2(head *ListNode, k int) *ListNode {
 给你一个链表数组，每个链表都已经按升序排列。
 
 请你将所有链表合并到一个升序链表中，返回合并后的链表。
-https://leetcode-cn.com/problems/merge-k-sorted-lists/
+
+提示：
+
+k == lists.length
+0 <= k <= 10^4
+0 <= lists[i].length <= 500
+-10^4 <= lists[i][j] <= 10^4
+lists[i] 按 升序 排列
+lists[i].length 的总和不超过 10^4
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/merge-k-sorted-lists
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
 
 func mergeKLists(lists []*ListNode) *ListNode {
+	if len(lists) < 1 {
+		return nil
+	}
+	if len(lists) == 1 {
+		return lists[0]
+	}
 
+	var head *ListNode
+	var tail *ListNode
+	smallers := make([]int, 0, 10) // 存放待插入的链表下标
+	nilNodes := make([]int, 0, 10) // 记录空的链表下标
+
+	for len(lists) > 0 {
+		for i := 0; i < len(lists); i++ {
+			if lists[i] == nil { // 记录nil链表
+				nilNodes = append(nilNodes, i)
+			} else if len(smallers) < 1 { // 记录首个
+				smallers = append(smallers, i)
+			} else { // 找最小
+				if lists[i].Val < lists[smallers[0]].Val { // 小于就从0插入
+					smallers = smallers[:1]
+					smallers[0] = i
+				} else if lists[i].Val == lists[smallers[0]].Val { // 等于就在后面拼接
+					smallers = append(smallers, i)
+				}
+			}
+		}
+
+		// 拼接链表
+		for i := 0; i < len(smallers); i++ {
+			if head == nil {
+				head = lists[smallers[i]] // 首个头部
+			}
+			if tail == nil {
+				tail = head
+			} else {
+				tail.Next = lists[smallers[i]] // 指向下一个
+				tail = lists[smallers[i]]
+			}
+
+			for tail.Next != nil {
+				if tail.Next.Val != tail.Val { // 寻找相等的尾巴
+					break
+				}
+				tail = tail.Next
+			}
+
+			if tail.Next != nil { // 更新 lists 链表
+				lists[smallers[i]] = tail.Next
+			} else { // 记录nil链表
+				lists[smallers[i]] = nil
+				nilNodes = append(nilNodes, smallers[i])
+			}
+		}
+		smallers = smallers[:0]
+
+		// 缩小空链表
+		var last = len(lists) - 1
+		for i := 0; i < len(nilNodes); i++ {
+			if lists[nilNodes[i]] == nil {
+				for last >= 0 {
+					if lists[last] != nil { // 找到
+						if nilNodes[i] < last { // 并且要小于 nilNodes[i] < last
+							lists[nilNodes[i]] = lists[last]
+							last--
+						}
+						break
+					}
+					last--
+				}
+			}
+		}
+		nilNodes = nilNodes[:0]
+		lists = lists[:last+1]
+	}
+	return head
 }
