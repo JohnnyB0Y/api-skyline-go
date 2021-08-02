@@ -273,7 +273,7 @@ lists[i].length 的总和不超过 10^4
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
 
-func mergeKLists(lists []*ListNode) *ListNode {
+func mergeKLists2(lists []*ListNode) *ListNode {
 	if len(lists) < 1 {
 		return nil
 	}
@@ -350,4 +350,65 @@ func mergeKLists(lists []*ListNode) *ListNode {
 		lists = lists[:last+1]
 	}
 	return head
+}
+
+type ListNodeHelper struct {
+	head *ListNode
+	tail *ListNode
+}
+
+func mergeKLists(lists []*ListNode) *ListNode {
+
+	if len(lists) < 1 {
+		return nil
+	}
+	if len(lists) == 1 {
+		return lists[0]
+	}
+
+	nodeHelpers := make([]ListNodeHelper, 10000*2+1) // 存放 -10000 ~ +10000 元素
+
+	for i := 0; i < len(lists); i++ {
+		list := lists[i]
+		for list != nil { // 把list 链表拆分到数组中
+			helper := &nodeHelpers[list.Val+10000]
+			if helper.head == nil {
+				helper.head = list
+			}
+			if helper.tail == nil {
+				helper.tail = helper.head
+			} else {
+				helper.tail.Next = list // 指向下一个
+			}
+
+			for helper.tail.Next != nil {
+				if helper.tail.Next.Val != helper.tail.Val { // 寻找相等的尾巴
+					break
+				}
+				helper.tail = helper.tail.Next
+			}
+
+			list = helper.tail.Next // 对下一个数值 操作
+			helper.tail.Next = nil
+		}
+	}
+
+	var headHelper *ListNodeHelper
+	for i := 0; i < len(nodeHelpers); i++ {
+		helper := &nodeHelpers[i]
+		if helper.head != nil {
+			if headHelper == nil {
+				headHelper = helper
+			} else {
+				headHelper.tail.Next = helper.head
+				headHelper.tail = helper.tail
+			}
+		}
+	}
+
+	if headHelper == nil {
+		return nil
+	}
+
+	return headHelper.head
 }
