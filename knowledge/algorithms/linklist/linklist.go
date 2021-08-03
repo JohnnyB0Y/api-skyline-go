@@ -412,3 +412,20 @@ func mergeKLists(lists []*ListNode) *ListNode {
 
 	return headHelper.head
 }
+
+func mergeKLists3(lists []*ListNode) *ListNode {
+	if len(lists) < 1 {
+		return nil
+	}
+
+	left, right := 0, len(lists)-1
+	for left < right {
+		for left < right { // 第一轮
+			lists[left] = mergeTwoLists(lists[left], lists[right])
+			left++
+			right--
+		}
+		left = 0 // 回到开始，直到都等于零
+	}
+	return lists[0]
+}
