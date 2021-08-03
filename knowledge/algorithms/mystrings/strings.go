@@ -508,6 +508,41 @@ t = t1 + t2 + ... + tm
 s1、s2、和 s3 都由小写英文字母组成
 https://leetcode-cn.com/problems/IY6buf/
 */
+
 func isInterleave(s1 string, s2 string, s3 string) bool {
-	return true
+	if len(s1)+len(s2) != len(s3) {
+		return false
+	}
+
+}
+
+// 没理解交错的意思！！！
+func isInterleaveErrorVersion(s1 string, s2 string, s3 string) bool {
+
+	if len(s1)+len(s2) != len(s3) {
+		return false
+	}
+
+	chars := make([]uint8, 26)
+
+	for i := 0; i < len(s3); i++ {
+		idx := uint8(s3[i] - 'a')
+		chars[idx] += 1
+	}
+
+	for i := 0; i < len(s1); i++ {
+		idx := uint8(s1[i] - 'a')
+		chars[idx] -= 1
+	}
+	for i := 0; i < len(s2); i++ {
+		idx := uint8(s2[i] - 'a')
+		chars[idx] -= 1
+	}
+
+	var count uint8
+	for i := 0; i < 26; i++ {
+		count += chars[i]
+	}
+
+	return count == 0
 }
