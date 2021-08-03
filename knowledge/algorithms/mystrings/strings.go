@@ -8,6 +8,7 @@ package mystrings
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -513,7 +514,35 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 	if len(s1)+len(s2) != len(s3) {
 		return false
 	}
+	return true
+}
 
+// 坑多！！！
+func isInterleaveErrorVersion2(s1 string, s2 string, s3 string) bool {
+	if len(s1)+len(s2) != len(s3) {
+		return false
+	}
+	// s3[i + j] = s1[i] + s2[j]
+	// s3[i] = s1[j] or s2[k]
+	s1Idx, s2Idx := 0, 0
+	fmt.Println(s1, s2, s3)
+	len_s1, len_s2 := len(s1), len(s2)
+	for i := 0; i < len(s3); i++ {
+		if s1Idx < len_s1 && s3[i] == s1[s1Idx] {
+			fmt.Println("s1:", s1[s1Idx], s1Idx)
+			s1Idx++
+			continue
+		}
+		if s2Idx < len_s2 && s3[i] == s2[s2Idx] {
+			fmt.Println("s2:", s2[s2Idx], s2Idx)
+			s2Idx++
+			continue
+		}
+		fmt.Println("false:", s3[i], i)
+		// 来到这里说明！！！
+		return false
+	}
+	return true
 }
 
 // 没理解交错的意思！！！

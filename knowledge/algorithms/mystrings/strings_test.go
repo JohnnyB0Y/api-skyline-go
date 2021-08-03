@@ -50,3 +50,9 @@ func TestMyAtoi(t *testing.T) {
 	t.Log(myAtoi("01"), "01", 1)
 	t.Log(myAtoi("+1"), "+1", 1)
 }
+
+func TestIsInterleave(t *testing.T) {
+	t.Log(isInterleave("aabcc", "dbbca", "aadbbcbcac"), true)
+	// t.Log(isInterleave("aabcc", "dbbca", "aadbbbaccc"), false)
+	// t.Log(isInterleave("", "", ""), true)
+}
