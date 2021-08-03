@@ -421,11 +421,40 @@ func mergeKLists3(lists []*ListNode) *ListNode {
 	left, right := 0, len(lists)-1
 	for left < right {
 		for left < right { // 第一轮
-			lists[left] = mergeTwoLists(lists[left], lists[right])
+			lists[left] = mergeTwoLists2(lists[left], lists[right])
 			left++
 			right--
 		}
 		left = 0 // 回到开始，直到都等于零
 	}
 	return lists[0]
+}
+
+func mergeTwoLists2(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+
+	head := ListNode{}
+	tail := &head
+
+	for l1 != nil && l2 != nil {
+		if l1.Val < l2.Val {
+			tail.Next = l1
+			l1 = l1.Next
+		} else {
+			tail.Next = l2
+			l2 = l2.Next
+		}
+		tail = tail.Next
+	}
+	if l1 != nil {
+		tail.Next = l1
+	} else {
+		tail.Next = l2
+	}
+	return head.Next
 }
