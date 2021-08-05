@@ -575,3 +575,10 @@ func isInterleaveErrorVersion(s1 string, s2 string, s3 string) bool {
 
 	return count == 0
 }
+
+func If(condition bool, tureReturn, falseReturn interface{}) interface{} {
+	if condition {
+		return tureReturn
+	}
+	return falseReturn
+}
